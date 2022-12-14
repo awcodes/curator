@@ -5,7 +5,6 @@ namespace Awcodes\Curator\Components;
 use Awcodes\Curator\Resources\MediaResource;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Awcodes\Curator\Components\Uploader;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -105,7 +104,7 @@ class Curator extends Component implements HasForms
         return Storage::disk($item['disk'])->download($item['filename']);
     }
 
-    public function setCurrentFile(array | null $media): void
+    public function setCurrentFile(array|null $media): void
     {
         if ($media) {
             $item = resolve(config('filament-curator.model'))->firstWhere('id', $media['id']);

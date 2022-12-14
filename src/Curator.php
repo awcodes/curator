@@ -4,8 +4,6 @@ namespace Awcodes\Curator;
 
 use Closure;
 use Filament\Support\Concerns\EvaluatesClosures;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +18,7 @@ class Curator
         'thumbnail' => ['width' => 200, 'height' => 200, 'quality' => 60],
     ];
 
-    protected string | Closure $resourceLabel = 'Media';
+    protected string|Closure $resourceLabel = 'Media';
 
     protected string $navigationIcon = 'heroicon-o-photograph';
 
@@ -28,7 +26,7 @@ class Curator
 
     protected string $tableActionType = 'link';
 
-    public function resourceLabel(string | Closure $label): static
+    public function resourceLabel(string|Closure $label): static
     {
         $this->resourceLabel = $label;
 
@@ -102,7 +100,7 @@ class Curator
         return in_array($ext, ['jpeg', 'jpg', 'png', 'webp', 'bmp']);
     }
 
-    public function generateThumbnails(Model | \stdClass $media, bool $usePath = false): void
+    public function generateThumbnails(Model|\stdClass $media, bool $usePath = false): void
     {
         if ($this->hasSizes($media->ext)) {
             $path_info = $this->getPathInfo($media->filename);
@@ -136,13 +134,13 @@ class Curator
         }
     }
 
-    public function destroyThumbnails(Model | \stdClass $media): void
+    public function destroyThumbnails(Model|\stdClass $media): void
     {
         if ($this->hasSizes($media->ext)) {
             $path_info = $this->getPathInfo($media->filename);
 
             $thumbnails = collect(Storage::disk($media->disk)->allFiles())->filter(function ($item) use ($path_info) {
-                return Str::startsWith($item, $path_info['dirname'] . '/' . $path_info['filename'] . '-');
+                return Str::startsWith($item, $path_info['dirname'].'/'.$path_info['filename'].'-');
             });
 
             foreach ($thumbnails as $thumbnail) {

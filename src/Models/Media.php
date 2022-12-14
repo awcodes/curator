@@ -4,9 +4,8 @@ namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
 use Awcodes\Curator\Facades\Curator;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use stdClass;
 
@@ -50,14 +49,14 @@ class Media extends Model
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->url($this->directory . '/' . $this->filename),
+            get: fn () => Storage::disk($this->disk)->url($this->directory.'/'.$this->filename),
         );
     }
 
     protected function path(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->path($this->directory . '/' . $this->filename),
+            get: fn () => Storage::disk($this->disk)->path($this->directory.'/'.$this->filename),
         );
     }
 
@@ -76,6 +75,6 @@ class Media extends Model
             $size /= 1024;
         }
 
-        return round($size, $precision) . ' ' . $units[$i];
+        return round($size, $precision).' '.$units[$i];
     }
 }

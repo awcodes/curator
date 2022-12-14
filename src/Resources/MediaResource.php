@@ -3,13 +3,13 @@
 namespace Awcodes\Curator\Resources;
 
 use Awcodes\Curator\Components\CuratorColumn;
+use Awcodes\Curator\Components\Uploader;
 use Awcodes\Curator\Models\Media;
+use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
-use Filament\Forms;
-use Filament\Tables;
 use Filament\Resources\Table;
-use Awcodes\Curator\Components\Uploader;
+use Filament\Tables;
 use Illuminate\Support\HtmlString;
 
 class MediaResource extends Resource
@@ -128,11 +128,11 @@ class MediaResource extends Resource
                 ->label(__('curator::tables.columns.disk'))
                 ->options([
                     'heroicon-o-server',
-                    'heroicon-o-cloud' => fn ($state): bool => in_array($state, app('curator')->getCloudDisks())
+                    'heroicon-o-cloud' => fn ($state): bool => in_array($state, app('curator')->getCloudDisks()),
                 ])
                 ->colors([
                     'secondary',
-                    'success' => fn ($state): bool => in_array($state, app('curator')->getCloudDisks())
+                    'success' => fn ($state): bool => in_array($state, app('curator')->getCloudDisks()),
                 ]),
             Tables\Columns\TextColumn::make('directory')
                 ->label(__('curator::tables.columns.directory'))
@@ -145,7 +145,7 @@ class MediaResource extends Resource
         return [
             Forms\Components\TextInput::make('alt')
                 ->label(__('curator::forms.fields.alt'))
-                ->hint(fn (): HtmlString => new HtmlString('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" class="filament-link" target="_blank">' . __('curator::forms.fields.alt_hint') . '</a>')),
+                ->hint(fn (): HtmlString => new HtmlString('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" class="filament-link" target="_blank">'.__('curator::forms.fields.alt_hint').'</a>')),
             Forms\Components\TextInput::make('title')
                 ->label(__('curator::forms.fields.title')),
             Forms\Components\Textarea::make('caption')

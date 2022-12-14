@@ -25,29 +25,29 @@ class CuratorPicker extends Field
 
     protected string $view = 'curator::components.picker';
 
-    protected string | Htmlable | Closure | null $buttonLabel = null;
+    protected string|Htmlable|Closure|null $buttonLabel = null;
 
-    protected bool | Closure | null $isConstrained = false;
+    protected bool|Closure|null $isConstrained = false;
 
-    protected string | Closure | null $curatorDiskName = 'public';
+    protected string|Closure|null $curatorDiskName = 'public';
 
-    protected string | Closure | null $curatorDirectory = 'media';
+    protected string|Closure|null $curatorDirectory = 'media';
 
-    protected string | Closure | null $curatorVisibility = 'public';
+    protected string|Closure|null $curatorVisibility = 'public';
 
-    protected array | Closure $curatorAcceptedFileTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'application/pdf'];
+    protected array|Closure $curatorAcceptedFileTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'application/pdf'];
 
-    protected bool | Closure $curatorShouldPreserveFilenames = false;
+    protected bool|Closure $curatorShouldPreserveFilenames = false;
 
-    protected int | Closure | null $curatorMaxSize = null;
+    protected int|Closure|null $curatorMaxSize = null;
 
-    protected int | Closure | null $curatorMinSize = null;
+    protected int|Closure|null $curatorMinSize = null;
 
-    protected string | Closure | null $curatorImageCropAspectRatio = null;
+    protected string|Closure|null $curatorImageCropAspectRatio = null;
 
-    protected string | Closure | null $curatorImageResizeTargetHeight = null;
+    protected string|Closure|null $curatorImageResizeTargetHeight = null;
 
-    protected string | Closure | null $curatorImageResizeTargetWidth = null;
+    protected string|Closure|null $curatorImageResizeTargetWidth = null;
 
     protected function setUp(): void
     {
@@ -74,21 +74,21 @@ class CuratorPicker extends Field
         ]);
     }
 
-    public function buttonLabel(string | Htmlable | Closure | null $label): static
+    public function buttonLabel(string|Htmlable|Closure|null $label): static
     {
         $this->buttonLabel = $label;
 
         return $this;
     }
 
-    public function constrained(bool | Closure | null $condition = true): static
+    public function constrained(bool|Closure|null $condition = true): static
     {
         $this->isConstrained = $condition;
 
         return $this;
     }
 
-    public function directory(Closure | PathGenerator | string | null $directory): static
+    public function directory(Closure|PathGenerator|string|null $directory): static
     {
         if (
             class_exists($directory) &&
@@ -113,68 +113,68 @@ class CuratorPicker extends Field
         return $this;
     }
 
-    public function acceptedFileTypes(array | Arrayable | Closure $types): static
+    public function acceptedFileTypes(array|Arrayable|Closure $types): static
     {
         $this->curatorAcceptedFileTypes = $types;
 
         return $this;
     }
 
-    public function disk(string | Closure | null $name): static
+    public function disk(string|Closure|null $name): static
     {
         $this->curatorDiskName = $name;
 
         return $this;
     }
 
-    public function maxSize(int | Closure | null $size): static
+    public function maxSize(int|Closure|null $size): static
     {
         $this->curatorMaxSize = $size;
 
         return $this;
     }
 
-    public function minSize(int | Closure | null $size): static
+    public function minSize(int|Closure|null $size): static
     {
         $this->curatorMinSize = $size;
 
         return $this;
     }
 
-    public function imageCropAspectRatio(string | Closure | null $ratio): static
+    public function imageCropAspectRatio(string|Closure|null $ratio): static
     {
         $this->curatorImageCropAspectRatio = $ratio;
 
         return $this;
     }
 
-    public function imageResizeTargetHeight(string | Closure | null $height): static
+    public function imageResizeTargetHeight(string|Closure|null $height): static
     {
         $this->curatorImageResizeTargetHeight = $height;
 
         return $this;
     }
 
-    public function imageResizeTargetWidth(string | Closure | null $width): static
+    public function imageResizeTargetWidth(string|Closure|null $width): static
     {
         $this->curatorImageResizeTargetWidth = $width;
 
         return $this;
     }
 
-    public function preserveFilenames(bool | Closure $condition = true): static
+    public function preserveFilenames(bool|Closure $condition = true): static
     {
         $this->curatorShouldPreserveFilenames = $condition;
 
         return $this;
     }
 
-    public function getCurrentItem(): Model | Collection | null
+    public function getCurrentItem(): Model|Collection|null
     {
         return Media::where('id', $this->getState())->first();
     }
 
-    public function getButtonLabel(): string | Htmlable | null
+    public function getButtonLabel(): string|Htmlable|null
     {
         return $this->evaluate($this->buttonLabel);
     }
