@@ -1,17 +1,18 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "awcodes/curator",
+    "description": "A media picker plugin for FilamentPHP.",
     "keywords": [
-        ":vendor_name",
+        "awcodes",
         "laravel",
-        ":package_slug"
+        "curator",
+        "filament"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/awcodes/curator",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "awcodes",
+            "email": "awcodes1@gmail.com",
             "role": "Developer"
         }
     ],
@@ -38,13 +39,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Awcodes\\Curator\\": "src",
+            "Awcodes\\Curator\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Awcodes\\Curator\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -67,10 +68,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Awcodes\\Curator\\CuratorServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Curator": "Awcodes\\Curator\\Facades\\Curator"
             }
         }
     },
