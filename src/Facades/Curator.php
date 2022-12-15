@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getNavigationIcon()
  * @method static array getCloudDisks()
  * @method static string getTableActionType()
- * @method static bool hasSizes(string $ext)
  * @method static bool isResizable(string $ext)
- * @method static void generateThumbnails(Model | \stdClass $media, bool $usePath = false)
- * @method static void destroyThumbnails(Model | \stdClass $media)
  *
  * @see \Awcodes\Curator\Curator
  */

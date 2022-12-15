@@ -1,9 +1,10 @@
 <div
-    {{ $attributes->merge($getExtraAttributes())->class(['px-4 py-3 filament-currator-tables-thumbnail-column']) }}
+    {{ $attributes->merge($getExtraAttributes())->class(['px-4 py-3 curator-column']) }}
 >
     @php
         $height = $getHeight();
         $width = $getWidth() ?? ($isRounded() ? $height : null);
+        $record = $getRecord();
     @endphp
 
     <div style="
@@ -14,7 +15,7 @@
     >
         @if ($isImage())
             <img
-                src="{{ $getImagePath() }}"
+                src="/curator/{{ $record->path }}?w=50&h=50&fit=crop&fm=webp"
                 style="
                     {!! $height !== null ? "height: {$height};" : null !!}
                     {!! $width !== null ? "width: {$width};" : null !!}
@@ -23,8 +24,8 @@
                 {{ $getExtraImgAttributeBag() }}
             />
         @else
-            <x-filament-curator::document-image
-                label="{{ $getImagePath() }}"
+            <x-curator::document-image
+                label="{{ $record->filename }}"
                 icon-size="md"
             />
         @endif

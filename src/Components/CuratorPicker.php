@@ -7,6 +7,7 @@ use Awcodes\Curator\Actions\PickerAction;
 use Awcodes\Curator\Config\PathGenerator\PathGenerator;
 use Awcodes\Curator\Models\Media;
 use Closure;
+use Exception;
 use Filament\Forms\Components\Field;
 use Filament\Support\Actions\Concerns\CanBeOutlined;
 use Filament\Support\Actions\Concerns\HasColor;
@@ -39,7 +40,7 @@ class CuratorPicker extends Field
 
     protected bool | Closure $curatorShouldPreserveFilenames = false;
 
-    protected int | Closure | null $curatorMaxSize = null;
+    protected int | Closure | null $curatorMaxSize = 1024;
 
     protected int | Closure | null $curatorMinSize = null;
 
@@ -49,6 +50,9 @@ class CuratorPicker extends Field
 
     protected string | Closure | null $curatorImageResizeTargetWidth = null;
 
+    /**
+     * @throws Exception
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -57,16 +61,6 @@ class CuratorPicker extends Field
         $this->size = 'md';
         $this->color = 'primary';
         $this->isOutlined = true;
-
-//        $this->curatorDiskName = config('filament-curator.disk', 'public');
-//        $this->curatorDirectory = config('filament-curator.directory');
-//        $this->curatorVisibility = config('filament-curator.visibility', 'public');
-//        $this->curatorAcceptedFileTypes = config('filament-curator.accepted_file_types');
-//        $this->curatorShouldPreserveFilenames = config('filament-curator.preserve_file_names');
-//        $this->curatorMaxWidth = config('filament-curator.max_width');
-//        $this->curatorMinSize = config('filament-curator.min_size');
-//        $this->curatorMaxSize = config('filament-curator.max_size');
-//        $this->rules = config('filament-curator.rules');
 
         $this->registerActions([
             PickerAction::make(),

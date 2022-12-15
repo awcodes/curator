@@ -1,4 +1,5 @@
 <div x-data="{
+    statePath: '{{ $statePath }}',
     selected: null,
     files: [],
     nextPageUrl: null,
@@ -6,6 +7,21 @@
     init() {
         this.getFiles('/curator/media');
         this.$el.closest('.filament-modal-window').classList.add('curator-modal-window');
+
+        const observer = new IntersectionObserver(
+            ([e]) => {
+                if (e.isIntersecting) {
+                    this.loadMoreFiles();
+                    return;
+                }
+            },
+            {
+                rootMargin: '0px',
+                threshold: [0],
+            }
+        );
+
+        observer.observe(this.$refs.loadMore);
     },
     getFiles: async function(url = '/curator/media', selected = null) {
         if (selected) {
@@ -56,14 +72,16 @@
         this.$wire.setCurrentFile(this.selected);
     },
     resetPicker: function() {
+        this.$dispatch('close-modal', { id: '{{ $modalId }}' })
+        console.log('should be closing')
         setTimeout(() => {
             this.files = [];
             this.setSelected();
         }, 1000);
     }
 }"
-     x-on:close-modal.window="$event.detail.id === '{{ $statePath }}' ? resetPicker() : null"
      x-on:clear-selected="selected = null"
+     x-on:insert-media.window="resetPicker"
      x-on:new-media-added.window="addNewFile($event.detail.media)"
      x-on:remove-media.window="removeFile($event.detail.media)"
      class="filament-curator h-full absolute inset-0 flex flex-col"
@@ -93,7 +111,7 @@
                         >
                             <template x-if="file.type.includes('image')">
                                 <img
-                                    x-bind:src="file.thumbnail_url"
+                                    x-bind:src="`/curator/${file.path}?w=200&h=200&fit=crop&fm=webp`"
                                     x-bind:alt="file.alt"
                                     width="300"
                                     height="300"
@@ -129,7 +147,7 @@
 
                 <li
                     class="relative aspect-square"
-                    x-intersect="loadMoreFiles();"
+                    x-ref="loadMore"
                     x-show="nextPageUrl"
                     x-cloak
                 >
@@ -189,7 +207,7 @@
 
                         <div class="flex justify-center mb-4 overflow-hidden border border-gray-300 rounded dark:border-gray-700 checkered h-48 flex-shrink-0 relative">
                             <template x-if="selected?.type.includes('image')">
-                                <img x-bind:src="selected?.medium_url"
+                                <img x-bind:src="`/curator/${selected?.path}?w=300&fm=webp`"
                                      x-bind:alt="selected?.alt"
                                      x-bind:width="selected?.width"
                                      x-bind:height="selected?.height"
@@ -268,7 +286,7 @@
                 type="submit"
                 color="success"
                 x-bind:disabled="!selected"
-                x-on:click.prevent="$dispatch('close-modal', { id: '{{ $modalId }}' })"
+{{--                x-on:click.prevent="$dispatch('close-modal', { id: '{{ $modalId }}' })"--}}
                 wire:click.prevent="insertMedia"
             >
                 {{ __('curator::views.modal.use_selected_image') }}

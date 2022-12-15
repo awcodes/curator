@@ -2,6 +2,7 @@
 
 namespace Awcodes\Curator\Components;
 
+use Awcodes\Curator\Models\Media;
 use Awcodes\Curator\Resources\MediaResource;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -100,7 +101,7 @@ class Curator extends Component implements HasForms
 
     public function download(): StreamedResponse
     {
-        $item = resolve(config('filament-curator.model'))->where('id', $this->selected['id'])->first();
+        $item = Media::where('id', $this->selected['id'])->first();
 
         return Storage::disk($item['disk'])->download($item['filename']);
     }
@@ -108,7 +109,7 @@ class Curator extends Component implements HasForms
     public function setCurrentFile(array | null $media): void
     {
         if ($media) {
-            $item = resolve(config('filament-curator.model'))->firstWhere('id', $media['id']);
+            $item = Media::firstWhere('id', $media['id']);
             if ($item) {
                 $this->editMediaForm->fill([
                     'alt' => $item->alt,
@@ -129,7 +130,8 @@ class Curator extends Component implements HasForms
         $media = [];
 
         foreach ($this->addMediaForm->getState()['files'] as $item) {
-            $media[] = resolve(config('filament-curator.model'))->create($item);
+            ray($item);
+            $media[] = Media::create($item);
         }
 
         $this->addMediaForm->fill();

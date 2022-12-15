@@ -15,10 +15,10 @@ class CuratorServiceProvider extends PluginServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name)
+            ->hasRoute('web')
             ->hasViews()
             ->hasTranslations()
             ->hasMigration('create_media_table')
-            ->hasCommands($this->getCommands())
             ->hasInstallCommand(function(InstallCommand $command) {
                 $command
                     ->publishConfigFile()
@@ -50,24 +50,10 @@ class CuratorServiceProvider extends PluginServiceProvider
         ];
     }
 
-    protected function getCommands(): array
-    {
-        return [
-            // Commands\RegenerateThumbnails::class
-        ];
-    }
-
     protected function getStyles(): array
     {
         return [
             'plugin-curator' => __DIR__ . '/../resources/dist/curator.css',
-        ];
-    }
-
-    protected function getScripts(): array
-    {
-        return [
-//            'plugin-curator' => __DIR__ . '/../resources/dist/curator.js',
         ];
     }
 }

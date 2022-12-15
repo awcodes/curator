@@ -10,7 +10,9 @@
         "build": "npm-run-all build:*"
     },
     "devDependencies": {
+        "@alpinejs/intersect": "^3.10.5",
         "@awcodes/filament-plugin-purge": "^1.0.2",
+        "alpinejs": "^3.10.5",
         "autoprefixer": "^10.4.7",
         "esbuild": "^0.8.57",
         "npm-run-all": "^4.1.5",

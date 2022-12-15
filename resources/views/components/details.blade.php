@@ -31,7 +31,7 @@ if (filled($record) && ($record->width && $record->height)) {
                 {{ __('curator::views.details.file_size') }}
             </dt>
             <dd class="{{ $dataClasses }}">
-                {{ filled($record) ? $record->sizeForHumans() : '-' }}
+                {{ filled($record) ? $record->size_for_humans : '-' }}
             </dd>
         </div>
         <div>

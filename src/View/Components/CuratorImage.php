@@ -11,9 +11,19 @@ class CuratorImage extends Component
 {
     public string | Media | null $media;
 
-    public function __construct(int $mediaId)
+    public string $source;
+
+    public string | null $glide = null;
+
+    public function __construct(int $mediaId, string $glide = null)
     {
         $this->media = Media::where('id', $mediaId)->first();
+
+        $this->source = $this->media->url;
+
+        if ($glide) {
+            $this->source = '/curator/' . $this->media->path . '?' . $glide;
+        }
     }
 
     public function render(): View|Closure|string

@@ -13,39 +13,6 @@ class CuratorColumn extends ImageColumn
 {
     protected string $view = 'curator::components.curator-column';
 
-    public function getImagePath(): ?string
-    {
-        $state = $this->getState();
-
-        if (! $state) {
-            return null;
-        }
-
-        if (is_string($state)) {
-            return $state;
-        }
-
-        /** @var FilesystemAdapter $storage */
-        $storage = $this->getDisk();
-
-        if (! $storage->exists($state->filename)) {
-            return null;
-        }
-
-        if ($this->getVisibility() === 'private' || $storage->getVisibility($state->filename) === 'private') {
-            try {
-                return $storage->temporaryUrl(
-                    $state->filename,
-                    now()->addMinutes(5),
-                );
-            } catch (Throwable $exception) {
-                // This driver does not support creating temporary URLs.
-            }
-        }
-
-        return $state->thumbnail_url;
-    }
-
     public function isImage(): bool
     {
         $state = $this->getState();

@@ -3,11 +3,10 @@
 namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
-use Awcodes\Curator\Facades\Curator;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use stdClass;
 
 class Media extends Model
@@ -24,13 +23,7 @@ class Media extends Model
             }
         });
 
-        static::created(function (Media $media) {
-            $media->refresh();
-            Curator::generateThumbnails($media);
-        });
-
         static::deleted(function (Media $media) {
-            Curator::destroyThumbnails($media);
             Storage::disk($media->disk)->delete($media->path);
 
             if (count(Storage::disk($media->disk)->allFiles($media->directory)) == 0) {
@@ -47,6 +40,10 @@ class Media extends Model
         'size' => 'integer',
     ];
 
+    protected $appends= [
+        'thumbnail_url'
+    ];
+
     protected function url(): Attribute
     {
         return Attribute::make(
@@ -54,7 +51,15 @@ class Media extends Model
         );
     }
 
-    protected function path(): Attribute
+    protected function thumbnailUrl(): Attribute
+    {
+        $filename = $this->directory . '/' . Str::of($this->filename)->beforeLast('.') . '-thumbnail.webp';
+        return Attribute::make(
+            get: fn () => Storage::disk($this->disk)->url($filename),
+        );
+    }
+
+    protected function fullPath(): Attribute
     {
         return Attribute::make(
             get: fn () => Storage::disk($this->disk)->path($this->directory . '/' . $this->filename),
