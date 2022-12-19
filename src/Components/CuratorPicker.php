@@ -4,6 +4,7 @@ namespace Awcodes\Curator\Components;
 
 use Awcodes\Curator\Actions\DownloadAction;
 use Awcodes\Curator\Actions\PickerAction;
+use Awcodes\Curator\Concerns\CanNormalizePaths;
 use Awcodes\Curator\Config\PathGenerator\PathGenerator;
 use Awcodes\Curator\Models\Media;
 use Closure;
@@ -23,6 +24,7 @@ class CuratorPicker extends Field
     use HasColor;
     use HasSize;
     use CanBeOutlined;
+    use CanNormalizePaths;
 
     protected string $view = 'curator::components.picker';
 
@@ -93,16 +95,7 @@ class CuratorPicker extends Field
             $path = $directory ?? $this->curatorDirectory;
         }
 
-        // normalization /path//to/dir/ --> path/to/dir
-        $path = preg_replace('#/+#', '/', $path);
-        if (Str::startsWith($path, '/')) {
-            $path = substr($path, 1);
-        }
-        if (Str::endsWith($path, '/')) {
-            $path = substr($path, 0, strlen($path) - 1);
-        }
-
-        $this->curatorDirectory = $path;
+        $this->curatorDirectory = $this->normalizePath($path);
 
         return $this;
     }

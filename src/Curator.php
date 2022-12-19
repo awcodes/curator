@@ -2,12 +2,19 @@
 
 namespace Awcodes\Curator;
 
+use Awcodes\Curator\Concerns\CanNormalizePaths;
+use Awcodes\Curator\Config\PathGenerator\DatePathGenerator;
+use Awcodes\Curator\Config\PathGenerator\DefaultPathGenerator;
+use Awcodes\Curator\Config\PathGenerator\PathGenerator;
+use Awcodes\Curator\Config\PathGenerator\UserPathGenerator;
 use Closure;
 use Filament\Support\Concerns\EvaluatesClosures;
+use Illuminate\Support\Str;
 
 class Curator
 {
     use EvaluatesClosures;
+    use CanNormalizePaths;
 
     protected string|Closure $resourceLabel = 'Media';
 
@@ -96,9 +103,18 @@ class Curator
         return $this;
     }
 
-    public function directory(string|Closure $directory): static
+    public function directory(Closure|PathGenerator|string|null $directory): static
     {
-        $this->directory = $directory;
+        if (
+            class_exists($directory) &&
+            is_subclass_of($directory, PathGenerator::class)
+        ) {
+            $path = resolve($directory)->getPath($this->directory);
+        } else {
+            $path = $directory ?? $this->directory;
+        }
+
+        $this->directory = $this->normalizePath($path);
 
         return $this;
     }

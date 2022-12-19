@@ -23,12 +23,34 @@
             @apply space-y-0;
         }
 
-        .filament-modal-content {
-            position: relative;
+        > button:first-child {
+            &:hover,
+            &:focus {
+                .filament-modal-close-button {
+                    @apply text-primary-500;
+                }
+            }
         }
 
         .filament-modal-header {
-            @apply p-4;
+            @apply py-2 px-4;
+
+            .filament-modal-heading {
+                @apply text-base;
+            }
+
+            + .filament-hr {
+                @apply mt-0;
+            }
+        }
+
+        .filament-modal-close-button {
+            @apply w-5 h-5;
+            margin-block-start: 0.1575rem;
+        }
+
+        .filament-modal-content {
+            position: relative;
         }
     }
 }

@@ -12,6 +12,9 @@ module.exports = {
                 success: colors.green,
                 warning: colors.amber,
             },
+            boxShadow: {
+                'top': '0 -26px 25px 15px rgba(0, 0, 0, 0.7)',
+            }
         },
     },
     corePlugins: {

@@ -26,7 +26,7 @@ return [
         'edit_save' => 'Save',
         'edit_delete' => 'Delete',
         'edit_cancel' => 'Cancel',
-        'use_selected_image' => 'Use Selected Image',
+        'use_selected_image' => 'Insert',
         'add_files' => 'Add Files',
         'view' => 'View',
         'edit' => 'Edit',

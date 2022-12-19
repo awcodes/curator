@@ -91,7 +91,7 @@
 
                 <template x-for="file in files">
 
-                    <li x-bind:key="file.id" class="relative aspect-square">
+                    <li x-bind:key="file.id" class="relative aspect-square" x-bind:class="{'opacity-40': selected && selected.id !== file.id }">
 
                         <button
                             type="button"
@@ -159,7 +159,18 @@
             </ul>
         </div> <!-- gallery -->
 
-        <div class="w-full h-full max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col">
+        <div class="w-full md:h-full md:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top md:shadow-none" style="z-index: 1;">
+
+            <label class="border-b border-gray-300 dark:border-gray-800">
+                <span class="sr-only">{{ __('curator::views.modal.search_label') }}</span>
+                <input
+                    type="search"
+                    wire:ignore
+                    placeholder="{{ __('curator::views.modal.search_placeholder') }}"
+                    x-on:input.debounce.500ms="searchFiles"
+                    class="block w-full transition duration-75 border-none focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-black/10 dark:text-white"
+                />
+            </label>
 
             <div x-show="! selected" class="flex-1 overflow-hidden">
                 <div class="flex flex-col h-full overflow-y-auto">
@@ -171,7 +182,7 @@
                         {{ $this->addMediaForm }}
                     </div>
 
-                    <div class="flex items-center justify-start gap-3 p-2 border-t border-gray-300 bg-gray-200 dark:border-gray-800 dark:bg-black/10">
+                    <div class="flex items-center justify-start gap-3 py-3 px-4 border-t border-gray-300 bg-gray-200 dark:border-gray-800 dark:bg-black/10">
                         <x-filament::button
                             type="button"
                             size="sm"
@@ -245,7 +256,7 @@
                         {{ $this->editMediaForm }}
                     </div>
 
-                    <div class="flex items-center justify-start gap-3 p-2 border-t border-gray-300 bg-gray-200 dark:border-gray-800 dark:bg-black/10">
+                    <div class="flex items-center justify-start gap-3 py-3 px-4 border-t border-gray-300 bg-gray-200 dark:border-gray-800 dark:bg-black/10">
 
                         <x-filament::button
                             type="button"
@@ -264,38 +275,19 @@
                         >
                             {{ __('curator::views.modal.edit_cancel') }}
                         </x-filament::button>
+
+                            <x-filament::button
+                                type="submit"
+                                color="success"
+                                size="sm"
+                                wire:click.prevent="insertMedia"
+                                class="ml-auto"
+                            >
+                                {{ __('curator::views.modal.use_selected_image') }}
+                            </x-filament::button>
                     </div>
                </div>
             </div> <!-- edit-media-form -->
         </div> <!-- gallery forms -->
     </div> <!-- main area -->
-
-    <x-filament-support::hr :dark-mode="config('filament.dark_mode')" />
-
-    <div
-        class="p-4 flex items-center justify-start gap-6"
-    >
-        <div x-bind:class="!selected ? 'opacity-75 pointer-events-none' : null">
-            <x-filament::button
-                type="submit"
-                color="success"
-                x-bind:disabled="!selected"
-                wire:click.prevent="insertMedia"
-            >
-                {{ __('curator::views.modal.use_selected_image') }}
-            </x-filament::button>
-        </div>
-
-        <label class="fixed top-3 right-10">
-            <span class="sr-only">{{ __('curator::views.modal.search_label') }}</span>
-            <input
-                type="search"
-                wire:ignore
-                placeholder="{{ __('curator::views.modal.search_placeholder') }}"
-                x-on:input.debounce.500ms="searchFiles"
-                class="block w-full py-1 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:border-primary-600 focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-            />
-        </label>
-    </div> <!-- footer -->
-
 </div>
