@@ -2,9 +2,9 @@
 
 namespace Awcodes\Curator\Components;
 
+use Awcodes\Curator\Facades\Curator;
 use Awcodes\Curator\Models\Media;
 use Filament\Tables\Columns\ImageColumn;
-use Awcodes\Curator\Facades\Curator;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Str;
 use Throwable;

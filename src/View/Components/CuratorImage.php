@@ -2,14 +2,14 @@
 
 namespace Awcodes\Curator\View\Components;
 
-use Closure;
-use Illuminate\View\Component;
 use Awcodes\Curator\Models\Media;
+use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class CuratorImage extends Component
 {
-    public string | Media | null $media;
+    public string|Media|null $media;
 
     public string $source;
 
