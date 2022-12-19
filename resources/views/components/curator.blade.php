@@ -1,87 +1,76 @@
 <div x-data="{
-    statePath: '{{ $statePath }}',
-    selected: null,
-    files: [],
-    nextPageUrl: null,
-    isFetching: false,
-    init() {
-        this.getFiles('/curator/media');
-        this.$el.closest('.filament-modal-window').classList.add('curator-modal-window');
-
-        const observer = new IntersectionObserver(
-            ([e]) => {
-                if (e.isIntersecting) {
-                    this.loadMoreFiles();
-                    return;
+        statePath: '{{ $statePath }}',
+        selected: null,
+        files: [],
+        nextPageUrl: null,
+        isFetching: false,
+        init() {
+            this.getFiles('/curator/media');
+            const observer = new IntersectionObserver(
+                ([e]) => {
+                    if (e.isIntersecting) {
+                        this.loadMoreFiles();
+                        return;
+                    }
+                },
+                {
+                    rootMargin: '0px',
+                    threshold: [0],
                 }
-            },
-            {
-                rootMargin: '0px',
-                threshold: [0],
+            );
+            observer.observe(this.$refs.loadMore);
+        },
+        getFiles: async function(url = '/curator/media', selected = null) {
+            if (selected) {
+                let indicator = url.includes('?') ? '&' : '?';
+                url = url + indicator + 'media_id=' + selected;
             }
-        );
-
-        observer.observe(this.$refs.loadMore);
-    },
-    getFiles: async function(url = '/curator/media', selected = null) {
-        if (selected) {
-            let indicator = url.includes('?') ? '&' : '?';
-            url = url + indicator + 'media_id=' + selected;
-        }
-        this.isFetching = true;
-        const response = await fetch(url);
-        const result = await response.json();
-        this.files = this.files ? this.files.concat(result.data) : result.data;
-        this.nextPageUrl = result.next_page_url;
-        this.isFetching = false;
-    },
-    loadMoreFiles: async function() {
-        if (this.nextPageUrl) {
             this.isFetching = true;
-            await this.getFiles(this.nextPageUrl, this.selected?.id);
+            const response = await fetch(url);
+            const result = await response.json();
+            this.files = this.files ? this.files.concat(result.data) : result.data;
+            this.nextPageUrl = result.next_page_url;
             this.isFetching = false;
-        }
-    },
-    searchFiles: async function(event) {
-        this.isFetching = true;
-        const response = await fetch('/curator/media/search?q=' + event.target.value);
-        const result = await response.json();
-        this.files = result.data;
-        this.isFetching = false;
-    },
-    addNewFile: function(media = null) {
-        if (media) {
-            this.files = [...media, ...this.files];
-            this.$nextTick(() => {
-                this.setSelected(media[0].id);
-            })
-        }
-    },
-    removeFile: function(media = null) {
-        if (media) {
-            this.files = this.files.filter((obj) => obj.id !== media.id);
-            this.selected = null;
-        }
-    },
-    setSelected: function(mediaId = null) {
-        if (!mediaId || (this.selected && this.selected.id === mediaId)) {
-            this.selected = null;
-        } else {
-            this.selected = this.files.find(obj => obj.id === mediaId);
-        }
-        this.$wire.setCurrentFile(this.selected);
-    },
-    resetPicker: function() {
-        this.$dispatch('close-modal', { id: '{{ $modalId }}' })
-        console.log('should be closing')
-        setTimeout(() => {
-            this.files = [];
-            this.setSelected();
-        }, 1000);
-    }
-}"
+        },
+        loadMoreFiles: async function() {
+            if (this.nextPageUrl) {
+                this.isFetching = true;
+                await this.getFiles(this.nextPageUrl, this.selected?.id);
+                this.isFetching = false;
+            }
+        },
+        searchFiles: async function(event) {
+            this.isFetching = true;
+            const response = await fetch('/curator/media/search?q=' + event.target.value);
+            const result = await response.json();
+            this.files = result.data;
+            this.isFetching = false;
+        },
+        addNewFile: function(media = null) {
+            if (media) {
+                this.files = [...media, ...this.files];
+                this.$nextTick(() => {
+                    this.setSelected(media[0].id);
+                })
+            }
+        },
+        removeFile: function(media = null) {
+            if (media) {
+                this.files = this.files.filter((obj) => obj.id !== media.id);
+                this.selected = null;
+            }
+        },
+        setSelected: function(mediaId = null) {
+            if (!mediaId || (this.selected && this.selected.id === mediaId)) {
+                this.selected = null;
+            } else {
+                this.selected = this.files.find(obj => obj.id === mediaId);
+            }
+            this.$wire.setCurrentFile(this.selected);
+        },
+    }"
      x-on:clear-selected="selected = null"
-     x-on:insert-media.window="resetPicker"
+     x-on:insert-media.window="$dispatch('close-modal', { id: '{{ $modalId }}' })"
      x-on:new-media-added.window="addNewFile($event.detail.media)"
      x-on:remove-media.window="removeFile($event.detail.media)"
      class="filament-curator h-full absolute inset-0 flex flex-col"
@@ -125,14 +114,14 @@
                             </template>
                         </button>
 
-                        <p x-text="file.title ?? file.filename" class="text-xs truncate absolute bottom-0 inset-x-0 px-1 pb-1 pt-4 text-white bg-gradient-to-t from-black/80 to-transparent"></p>
+                        <p x-text="file.title ?? file.filename" class="text-xs truncate absolute bottom-0 inset-x-0 px-1 pb-1 pt-4 text-white bg-gradient-to-t from-black/80 to-transparent pointer-events-none"></p>
 
                         <button
                             type="button"
                             x-on:click="setSelected()"
-                            class="absolute inset-0 flex items-center justify-center w-full h-full rounded shadow text-primary-600 bg-primary-500/20 ring-2 ring-primary-500"
                             x-show="selected && selected.id === file.id"
                             x-cloak
+                            class="absolute inset-0 flex items-center justify-center w-full h-full rounded shadow text-primary-600 bg-primary-500/20 ring-2 ring-primary-500"
                         >
                             <div class="flex items-center justify-center w-8 h-8 text-white rounded-full bg-primary-500 drop-shadow">
                                 @svg('heroicon-s-check', 'w-5 h-5')
@@ -207,11 +196,13 @@
 
                         <div class="flex justify-center mb-4 overflow-hidden border border-gray-300 rounded dark:border-gray-700 checkered h-48 flex-shrink-0 relative">
                             <template x-if="selected?.type.includes('image')">
-                                <img x-bind:src="`/curator/${selected?.path}?w=300&fm=webp`"
-                                     x-bind:alt="selected?.alt"
-                                     x-bind:width="selected?.width"
-                                     x-bind:height="selected?.height"
-                                     class="block object-cover h-full" />
+                                <img
+                                    x-bind:src="`/curator/${selected?.path}?w=300&fm=webp`"
+                                    x-bind:alt="selected?.alt"
+                                    x-bind:width="selected?.width"
+                                    x-bind:height="selected?.height"
+                                    class="block object-cover h-full"
+                                />
                             </template>
                             <template x-if="!selected?.type.includes('image')">
                                 <x-curator::document-image icon-size="lg">
@@ -219,9 +210,12 @@
                                 </x-curator::document-image>
                             </template>
                             <div class="absolute top-0 right-0 flex bg-gray-900 divide-x divide-gray-700 rounded-bl-lg shadow-md">
-                                <a x-bind:href="selected?.url" target="_blank" rel="noopener nofollow"
-                                   class="flex items-center justify-center flex-none w-10 h-10 transition text-gray-600 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
-                                   x-tooltip.raw="{{ __('curator::views.modal.view') }}"
+                                <a
+                                    x-bind:href="selected?.url"
+                                    target="_blank"
+                                    rel="noopener nofollow"
+                                    class="flex items-center justify-center flex-none w-10 h-10 transition text-gray-600 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
+                                    x-tooltip.raw="{{ __('curator::views.modal.view') }}"
                                 >
                                     @svg('heroicon-s-eye', 'w-4 h-4')
                                     <span class="sr-only">{{ __('curator::views.modal.view') }}</span>
@@ -286,7 +280,6 @@
                 type="submit"
                 color="success"
                 x-bind:disabled="!selected"
-{{--                x-on:click.prevent="$dispatch('close-modal', { id: '{{ $modalId }}' })"--}}
                 wire:click.prevent="insertMedia"
             >
                 {{ __('curator::views.modal.use_selected_image') }}
