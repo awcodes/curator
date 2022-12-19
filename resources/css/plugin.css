@@ -15,6 +15,14 @@
     linear-gradient(135deg, transparent 75%, theme("colors.gray.700") 75%);
 }
 
+.filament-resources-media {
+    .filament-tables-component {
+        .filament-tables-record-checkbox {
+            z-index: 1;
+        }
+    }
+}
+
 [wire\:key*="curator_picker"] {
     .filament-modal-window {
         @apply !p-0;

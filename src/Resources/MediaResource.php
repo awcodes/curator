@@ -99,7 +99,9 @@ class MediaResource extends Resource
     {
         return $table
             ->columns(array_merge(
-                static::getDefaultTableColumns(),
+                app('curator')->getTableLayout() == 'grid'
+                    ? static::getDefaultGridTableColumns()
+                    : static::getDefaultTableColumns(),
             ))
             ->filters([
 
@@ -144,6 +146,26 @@ class MediaResource extends Resource
                 ]),
             Tables\Columns\TextColumn::make('directory')
                 ->label(__('curator::tables.columns.directory'))
+                ->sortable(),
+        ];
+    }
+
+    public static function getDefaultGridTableColumns(): array
+    {
+        return [
+            Tables\Columns\Layout\View::make('curator::components.grid-column'),
+            Tables\Columns\TextColumn::make('name')
+                ->label(__('curator::tables.columns.name'))
+                ->extraAttributes(['class' => 'hidden'])
+                ->searchable()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('ext')
+                ->label(__('curator::tables.columns.ext'))
+                ->extraAttributes(['class' => 'hidden'])
+                ->sortable(),
+            Tables\Columns\TextColumn::make('directory')
+                ->label(__('curator::tables.columns.directory'))
+                ->extraAttributes(['class' => 'hidden'])
                 ->sortable(),
         ];
     }

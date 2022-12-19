@@ -22,6 +22,8 @@ class Curator
 
     protected string $tableActionType = 'link';
 
+    protected string $tableLayout = 'table';
+
     protected bool|Closure $shouldPreserveFilenames = false;
 
     protected array|Closure $acceptedFileTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'application/pdf'];
@@ -57,6 +59,13 @@ class Curator
     public function tableActionType(string $actionType): static
     {
         $this->tableActionType = $actionType;
+
+        return $this;
+    }
+
+    public function tableLayout(string $layout): static
+    {
+        $this->tableLayout = $layout;
 
         return $this;
     }
@@ -150,6 +159,15 @@ class Curator
         }
 
         return $this->tableActionType;
+    }
+
+    public function getTableLayout(): string
+    {
+        if (! in_array($this->tableLayout, ['table', 'grid'])) {
+            return 'table';
+        }
+
+        return $this->tableLayout;
     }
 
     public function shouldPreserveFilenames(): bool
