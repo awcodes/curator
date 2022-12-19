@@ -2,11 +2,11 @@
 
 namespace Awcodes\Curator\Tests;
 
-use Awcodes\Curator\CuratorServiceProvider;
 use Filament\FilamentServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Awcodes\Curator\CuratorServiceProvider;
 
 class TestCase extends Orchestra
 {

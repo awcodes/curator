@@ -7,5 +7,5 @@ return [
         'ext' => 'Extension',
         'disk' => 'Disk',
         'directory' => 'Directory',
-    ],
+    ]
 ];

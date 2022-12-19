@@ -1,9 +1,10 @@
 <?php
 
+
 namespace Awcodes\Curator\Actions;
 
-use Awcodes\Curator\Components\CuratorPicker;
 use Filament\Forms\Components\Actions\Action;
+use Awcodes\Curator\Components\CuratorPicker;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -20,7 +21,6 @@ class DownloadAction extends Action
 
         $this->action(function (CuratorPicker $component): StreamedResponse {
             $item = resolve(config('filament-curator.model'))->where('id', $component->getState())->first();
-
             return Storage::disk($item['disk'])->download($item['filename']);
         });
     }

@@ -3,13 +3,8 @@
 namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Model;
-=======
-use Awcodes\Curator\Facades\Curator;
->>>>>>> 1babe7e092fc72938163a76dd44b9c5a2b90a808
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use stdClass;
@@ -52,7 +47,7 @@ class Media extends Model
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->url($this->directory.'/'.$this->filename),
+            get: fn () => Storage::disk($this->disk)->url($this->directory . '/' . $this->filename),
         );
     }
 
@@ -67,7 +62,7 @@ class Media extends Model
     protected function fullPath(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->path($this->directory.'/'.$this->filename),
+            get: fn () => Storage::disk($this->disk)->path($this->directory . '/' . $this->filename),
         );
     }
 
@@ -86,6 +81,6 @@ class Media extends Model
             $size /= 1024;
         }
 
-        return round($size, $precision).' '.$units[$i];
+        return round($size, $precision) . ' ' . $units[$i];
     }
 }

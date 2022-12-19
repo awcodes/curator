@@ -10,7 +10,7 @@ class DatePathGenerator implements PathGenerator
     {
         $now = Carbon::now();
 
-        return ($baseDir ? $baseDir.'/' : '').sprintf(
+        return ($baseDir ? $baseDir . '/' : '') . sprintf(
             '%s/%s/%s',
             $now->format('Y'),
             $now->format('m'),
