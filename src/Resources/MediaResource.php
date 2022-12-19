@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Resources\Table;
 use Awcodes\Curator\Components\Uploader;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class MediaResource extends Resource
 {
@@ -35,13 +36,17 @@ class MediaResource extends Resource
                         Forms\Components\Section::make(__('curator::forms.sections.file'))
                             ->hiddenOn('edit')
                             ->schema([
-                                Uploader::make('filename')
-                                    ->preserveFilenames(config('curator.preserve_file_names', false))
+                                Uploader::make('file')
                                     ->disableLabel()
-                                    ->maxWidth(5000)
-                                    ->acceptedFileTypes(config('curator.accepted_file_types', []))
-                                    ->disk(config('curator.disk', 'public'))
                                     ->required()
+                                    ->preserveFilenames(app('curator')->shouldPreserveFilenames())
+                                    ->maxWidth(app('curator')->getMaxWidth())
+                                    ->minSize(app('curator')->getMinSize())
+                                    ->maxSize(app('curator')->getMaxSize())
+                                    ->acceptedFileTypes(app('curator')->getAcceptedFileTypes())
+                                    ->disk(app('curator')->getDiskName())
+                                    ->directory(app('curator')->getDirectory())
+                                    ->visibility(app('curator')->getVisibility())
                                     ->maxFiles(1)
                                     ->panelAspectRatio('24:9'),
                             ]),
@@ -87,6 +92,9 @@ class MediaResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -117,8 +125,8 @@ class MediaResource extends Resource
             CuratorColumn::make('url')
                 ->label(__('curator::tables.columns.url'))
                 ->size(40),
-            Tables\Columns\TextColumn::make('filename')
-                ->label(__('curator::tables.columns.filename'))
+            Tables\Columns\TextColumn::make('name')
+                ->label(__('curator::tables.columns.name'))
                 ->searchable()
                 ->sortable(),
             Tables\Columns\TextColumn::make('ext')
@@ -143,6 +151,14 @@ class MediaResource extends Resource
     public static function getAdditionalInformationFormSchema(): array
     {
         return [
+            Forms\Components\TextInput::make('name')
+                ->label(__('curator::forms.fields.name'))
+                ->hiddenOn('create')
+                ->dehydrateStateUsing(function ($component, $state) {
+                    $slugged = Str::slug($state);
+                    $component->state($slugged);
+                    return $slugged;
+                }),
             Forms\Components\TextInput::make('alt')
                 ->label(__('curator::forms.fields.alt'))
                 ->hint(fn (): HtmlString => new HtmlString('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" class="filament-link" target="_blank">' . __('curator::forms.fields.alt_hint') . '</a>')),

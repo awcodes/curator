@@ -3,7 +3,7 @@
 return [
     'columns' => [
         'url' => 'URL',
-        'filename' => 'Filename',
+        'name' => 'Name',
         'ext' => 'Extension',
         'disk' => 'Disk',
         'directory' => 'Directory',

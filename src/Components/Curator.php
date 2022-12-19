@@ -6,7 +6,6 @@ use Awcodes\Curator\Models\Media;
 use Awcodes\Curator\Resources\MediaResource;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Awcodes\Curator\Components\Uploader;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -112,6 +111,7 @@ class Curator extends Component implements HasForms
             $item = Media::firstWhere('id', $media['id']);
             if ($item) {
                 $this->editMediaForm->fill([
+                    'name' => $item->name,
                     'alt' => $item->alt,
                     'title' => $item->title,
                     'caption' => $item->caption,
@@ -130,7 +130,6 @@ class Curator extends Component implements HasForms
         $media = [];
 
         foreach ($this->addMediaForm->getState()['files'] as $item) {
-            ray($item);
             $media[] = Media::create($item);
         }
 

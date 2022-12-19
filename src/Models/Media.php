@@ -6,7 +6,6 @@ use Awcodes\Curator\Concerns\HasPackageFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use stdClass;
 
 class Media extends Model
@@ -16,10 +15,26 @@ class Media extends Model
     protected static function booted()
     {
         static::creating(function (Media $media) {
-            if (is_array($media->filename) || $media->filename instanceof stdClass) {
-                foreach ($media->filename as $k => $v) {
-                    $media->{$k} = $v;
+            if (is_array($media->file) || $media->file instanceof stdClass) {
+                foreach ($media->file as $k => $v) {
+                    if ($k === 'name') {
+                        $media->{$k} = $v->toString();
+                    } else {
+                        $media->{$k} = $v;
+                    }
                 }
+
+                $media->__unset('file');
+            }
+        });
+
+        static::updating(function (Media $media) {
+            if ($media->isDirty(['name']) && ! blank($media->name)) {
+                if (Storage::disk($media->disk)->exists($media->directory . '/' . $media->name . '.' . $media->ext)) {
+                    $media->name = $media->name . '-' . time();
+                }
+                Storage::disk($media->disk)->move($media->path, $media->directory . '/' . $media->name . '.' . $media->ext);
+                $media->path = $media->directory . '/' . $media->name . '.' . $media->ext;
             }
         });
 
@@ -47,22 +62,21 @@ class Media extends Model
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->url($this->directory . '/' . $this->filename),
+            get: fn () => Storage::disk($this->disk)->url($this->directory . '/' . $this->name . '.' . $this->ext),
         );
     }
 
     protected function thumbnailUrl(): Attribute
     {
-        $filename = $this->directory . '/' . Str::of($this->filename)->beforeLast('.') . '-thumbnail.webp';
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->url($filename),
+            get: fn () => '/curator/' . $this->path. '?w=200&h=200&fit=crop&fm=webp',
         );
     }
 
     protected function fullPath(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->path($this->directory . '/' . $this->filename),
+            get: fn () => Storage::disk($this->disk)->path($this->directory . '/' . $this->name. '.' . $this->ext),
         );
     }
 

@@ -92,10 +92,10 @@
                     @endif
                 </div>
                 <div
-                    class="absolute inset-x-0 bottom-0 flex items-center justify-between px-4 pt-10 pb-4 text-xs text-white bg-gradient-to-t from-black/80 to-transparent"
+                    class="absolute inset-x-0 bottom-0 flex items-center justify-between px-2 pt-10 pb-1 text-xs text-white bg-gradient-to-t from-black/80 to-transparent gap-3"
                 >
-                    <p class="truncate">{{ $currentItem['filename'] }}</p>
-                    <p>{{ $currentItem['size_for_humans'] }}</p>
+                    <p class="truncate">{{ $currentItem['name'] }}.{{ $currentItem['ext'] }}</p>
+                    <p class="flex-shrink-0">{{ $currentItem['size_for_humans'] }}</p>
                 </div>
             </div>
         @endif

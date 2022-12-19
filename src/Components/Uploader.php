@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Livewire\TemporaryUploadedFile;
 use Awcodes\Curator\Facades\Curator;
-use Spatie\Glide\GlideImage;
 
 class Uploader extends FileUpload
 {
@@ -38,7 +37,7 @@ class Uploader extends FileUpload
             return [
                 'disk' => $component->getDiskName(),
                 'directory' => $component->getDirectory(),
-                'filename' => $filename . '.' . $extension,
+                'name' => $filename,
                 'path' => $path,
                 'width' => $width ?? null,
                 'height' => $height ?? null,

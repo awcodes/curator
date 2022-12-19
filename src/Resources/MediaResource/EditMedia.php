@@ -20,11 +20,11 @@ class EditMedia extends EditRecord
         return [
             Action::make('save')
                 ->action('save')
-                ->label(__('curator::resource.labels.save')),
+                ->label(__('curator::views.modal.edit_save')),
             Action::make('preview')
                 ->color('secondary')
                 ->url($this->record->url, shouldOpenInNewTab: true)
-                ->label(__('curator::resource.labels.preview')),
+                ->label(__('curator::views.modal.view')),
             DeleteAction::make(),
         ];
     }
