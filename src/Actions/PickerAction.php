@@ -1,10 +1,9 @@
 <?php
 
-
 namespace Awcodes\Curator\Actions;
 
-use Filament\Forms\Components\Actions\Action;
 use Awcodes\Curator\Components\CuratorPicker;
+use Filament\Forms\Components\Actions\Action;
 
 class PickerAction extends Action
 {
@@ -23,10 +22,10 @@ class PickerAction extends Action
 
         $this->modalHeading(__('curator::views.modal.heading'));
 
-        $this->modalContent(static function(CuratorPicker $component) {
+        $this->modalContent(static function (CuratorPicker $component) {
             return view('curator::components.picker-action', [
                 'statePath' => $component->getStatePath(),
-                'modalId' => $component->getLivewire()->id . '-form-component-action',
+                'modalId' => $component->getLivewire()->id.'-form-component-action',
                 'directory' => $component->getDirectory(),
                 'shouldPreserveFilenames' => $component->shouldPreserveFilenames(),
                 'maxWidth' => $component->getMaxWidth(),

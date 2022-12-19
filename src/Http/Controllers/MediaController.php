@@ -25,10 +25,10 @@ class MediaController extends Controller
 
     public function search(Request $request)
     {
-        $files = Media::where('filename', 'like', '%' . $request->q . '%')
-            ->orWhere('alt', 'like', '%' . $request->q . '%')
-            ->orWhere('caption', 'like', '%' . $request->q . '%')
-            ->orWhere('description', 'like', '%' . $request->q . '%')
+        $files = Media::where('filename', 'like', '%'.$request->q.'%')
+            ->orWhere('alt', 'like', '%'.$request->q.'%')
+            ->orWhere('caption', 'like', '%'.$request->q.'%')
+            ->orWhere('description', 'like', '%'.$request->q.'%')
             ->paginate(50);
 
         return response()->json($files, 200);
@@ -42,7 +42,7 @@ class MediaController extends Controller
             'source_path_prefix' => 'public',
             'cache' => $filesystem->getDriver(),
             'cache_path_prefix' => '.cache',
-            'base_url' => 'curator'
+            'base_url' => 'curator',
         ]);
 
         return $server->getImageResponse($path, request()->all());

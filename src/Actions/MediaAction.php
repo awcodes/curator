@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FilamentCurator\Actions;
 
 use Filament\Forms\Components\Actions\Action;
@@ -25,10 +24,10 @@ class MediaAction extends Action
 
         $this->modalActions(fn () => []);
 
-        $this->modalContent(static function(TiptapEditor | MediaPicker $component): View {
+        $this->modalContent(static function (TiptapEditor|MediaPicker $component): View {
             return view('filament-curator::components.media-action', [
                 'statePath' => $component->getStatePath(),
-                'modalId' => $component->getLivewire()->id . '-form-component-action',
+                'modalId' => $component->getLivewire()->id.'-form-component-action',
                 'directory' => config('filament-tiptap-editor.directory'),
                 'shouldPreserveFilenames' => config('filament-tiptap-editor.preserve_file_names'),
                 'maxWidth' => config('filament-curator.max_width'),

@@ -3,8 +3,8 @@
 namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use stdClass;
 
@@ -30,11 +30,11 @@ class Media extends Model
 
         static::updating(function (Media $media) {
             if ($media->isDirty(['name']) && ! blank($media->name)) {
-                if (Storage::disk($media->disk)->exists($media->directory . '/' . $media->name . '.' . $media->ext)) {
-                    $media->name = $media->name . '-' . time();
+                if (Storage::disk($media->disk)->exists($media->directory.'/'.$media->name.'.'.$media->ext)) {
+                    $media->name = $media->name.'-'.time();
                 }
-                Storage::disk($media->disk)->move($media->path, $media->directory . '/' . $media->name . '.' . $media->ext);
-                $media->path = $media->directory . '/' . $media->name . '.' . $media->ext;
+                Storage::disk($media->disk)->move($media->path, $media->directory.'/'.$media->name.'.'.$media->ext);
+                $media->path = $media->directory.'/'.$media->name.'.'.$media->ext;
             }
         });
 
@@ -55,28 +55,28 @@ class Media extends Model
         'size' => 'integer',
     ];
 
-    protected $appends= [
-        'thumbnail_url'
+    protected $appends = [
+        'thumbnail_url',
     ];
 
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->url($this->directory . '/' . $this->name . '.' . $this->ext),
+            get: fn () => Storage::disk($this->disk)->url($this->directory.'/'.$this->name.'.'.$this->ext),
         );
     }
 
     protected function thumbnailUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => '/curator/' . $this->path. '?w=200&h=200&fit=crop&fm=webp',
+            get: fn () => '/curator/'.$this->path.'?w=200&h=200&fit=crop&fm=webp',
         );
     }
 
     protected function fullPath(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->path($this->directory . '/' . $this->name. '.' . $this->ext),
+            get: fn () => Storage::disk($this->disk)->path($this->directory.'/'.$this->name.'.'.$this->ext),
         );
     }
 
@@ -95,6 +95,6 @@ class Media extends Model
             $size /= 1024;
         }
 
-        return round($size, $precision) . ' ' . $units[$i];
+        return round($size, $precision).' '.$units[$i];
     }
 }

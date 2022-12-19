@@ -105,7 +105,7 @@ class Curator extends Component implements HasForms
         return Storage::disk($item['disk'])->download($item['filename']);
     }
 
-    public function setCurrentFile(array | null $media): void
+    public function setCurrentFile(array|null $media): void
     {
         if ($media) {
             $item = Media::firstWhere('id', $media['id']);

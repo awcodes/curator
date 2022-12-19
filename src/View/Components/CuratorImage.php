@@ -2,18 +2,18 @@
 
 namespace Awcodes\Curator\View\Components;
 
-use Closure;
-use Illuminate\View\Component;
 use Awcodes\Curator\Models\Media;
+use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
 class CuratorImage extends Component
 {
-    public string | Media | null $media;
+    public string|Media|null $media;
 
     public string $source;
 
-    public string | null $glide = null;
+    public string|null $glide = null;
 
     public function __construct(int $mediaId, string $glide = null)
     {
@@ -22,7 +22,7 @@ class CuratorImage extends Component
         $this->source = $this->media->url;
 
         if ($glide) {
-            $this->source = '/curator/' . $this->media->path . '?' . $glide;
+            $this->source = '/curator/'.$this->media->path.'?'.$glide;
         }
     }
 

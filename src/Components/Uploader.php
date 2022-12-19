@@ -2,13 +2,13 @@
 
 namespace Awcodes\Curator\Components;
 
+use Awcodes\Curator\Facades\Curator;
 use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Livewire\TemporaryUploadedFile;
-use Awcodes\Curator\Facades\Curator;
 
 class Uploader extends FileUpload
 {
@@ -28,11 +28,11 @@ class Uploader extends FileUpload
                 $height = $image->getHeight();
             }
 
-            if (Storage::disk($component->getDiskName())->exists(ltrim($component->getDirectory() . '/' . $filename . '.' . $extension, '/'))) {
-                $filename = $filename . '-' . time();
+            if (Storage::disk($component->getDiskName())->exists(ltrim($component->getDirectory().'/'.$filename.'.'.$extension, '/'))) {
+                $filename = $filename.'-'.time();
             }
 
-            $path = $file->{$storeMethod}($component->getDirectory(), $filename . '.' . $extension, $component->getDiskName());
+            $path = $file->{$storeMethod}($component->getDirectory(), $filename.'.'.$extension, $component->getDiskName());
 
             return [
                 'disk' => $component->getDiskName(),
@@ -60,7 +60,7 @@ class Uploader extends FileUpload
             $this->state([$this->getState()]);
         }
 
-        $state = array_map(function (TemporaryUploadedFile | array $file) {
+        $state = array_map(function (TemporaryUploadedFile|array $file) {
             if (! $file instanceof TemporaryUploadedFile) {
                 return $file;
             }

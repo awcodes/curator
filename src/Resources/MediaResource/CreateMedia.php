@@ -2,8 +2,8 @@
 
 namespace Awcodes\Curator\Resources\MediaResource;
 
-use Filament\Resources\Pages\CreateRecord;
 use Awcodes\Curator\Resources\MediaResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateMedia extends CreateRecord
 {

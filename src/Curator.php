@@ -9,31 +9,31 @@ class Curator
 {
     use EvaluatesClosures;
 
-    protected string | Closure $resourceLabel = 'Media';
+    protected string|Closure $resourceLabel = 'Media';
 
     protected string $navigationIcon = 'heroicon-o-photograph';
 
     protected string $tableActionType = 'link';
 
-    protected bool | Closure $shouldPreserveFilenames = false;
+    protected bool|Closure $shouldPreserveFilenames = false;
 
-    protected array | Closure $acceptedFileTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'application/pdf'];
+    protected array|Closure $acceptedFileTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'application/pdf'];
 
-    protected int | Closure $maxWidth = 2000;
+    protected int|Closure $maxWidth = 2000;
 
-    protected int | Closure $minSize = 0;
+    protected int|Closure $minSize = 0;
 
-    protected int | Closure $maxSize = 5000;
+    protected int|Closure $maxSize = 5000;
 
-    protected string | Closure $diskName = 'public';
+    protected string|Closure $diskName = 'public';
 
-    protected string | Closure $directory = 'media';
+    protected string|Closure $directory = 'media';
 
-    protected string | Closure $visibility = 'public';
+    protected string|Closure $visibility = 'public';
 
     protected array $cloudDisks = ['s3', 'cloudinary', 'imgix'];
 
-    public function resourceLabel(string | Closure $label): static
+    public function resourceLabel(string|Closure $label): static
     {
         $this->resourceLabel = $label;
 
@@ -54,56 +54,56 @@ class Curator
         return $this;
     }
 
-    public function preserveFilenames(bool | Closure $condition = true): static
+    public function preserveFilenames(bool|Closure $condition = true): static
     {
         $this->shouldPreserveFilenames = $condition;
 
         return $this;
     }
 
-    public function acceptedFileTypes(array | Closure $types): static
+    public function acceptedFileTypes(array|Closure $types): static
     {
         $this->acceptedFileTypes = $types;
 
         return $this;
     }
 
-    public function maxWidth(int | Closure $width): static
+    public function maxWidth(int|Closure $width): static
     {
         $this->maxWidth = $width;
 
         return $this;
     }
 
-    public function minSize(int | Closure $size): static
+    public function minSize(int|Closure $size): static
     {
         $this->minSize = $size;
 
         return $this;
     }
 
-    public function maxSize(int | Closure $size): static
+    public function maxSize(int|Closure $size): static
     {
         $this->maxSize = $size;
 
         return $this;
     }
 
-    public function disk(string | Closure $disk): static
+    public function disk(string|Closure $disk): static
     {
         $this->diskName = $disk;
 
         return $this;
     }
 
-    public function directory(string | Closure $directory): static
+    public function directory(string|Closure $directory): static
     {
         $this->directory = $directory;
 
         return $this;
     }
 
-    public function visibility(string | Closure $visibility): static
+    public function visibility(string|Closure $visibility): static
     {
         $this->visibility = $visibility;
 

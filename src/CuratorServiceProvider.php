@@ -19,7 +19,7 @@ class CuratorServiceProvider extends PluginServiceProvider
             ->hasViews()
             ->hasTranslations()
             ->hasMigration('create_media_table')
-            ->hasInstallCommand(function(InstallCommand $command) {
+            ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
                     ->publishMigrations()
@@ -46,14 +46,14 @@ class CuratorServiceProvider extends PluginServiceProvider
     protected function getResources(): array
     {
         return [
-             Resources\MediaResource::class
+            Resources\MediaResource::class,
         ];
     }
 
     protected function getStyles(): array
     {
         return [
-            'plugin-curator' => __DIR__ . '/../resources/dist/curator.css',
+            'plugin-curator' => __DIR__.'/../resources/dist/curator.css',
         ];
     }
 }
