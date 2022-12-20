@@ -3,13 +3,9 @@
 namespace Awcodes\Curator;
 
 use Awcodes\Curator\Concerns\CanNormalizePaths;
-use Awcodes\Curator\Config\PathGenerator\DatePathGenerator;
-use Awcodes\Curator\Config\PathGenerator\DefaultPathGenerator;
 use Awcodes\Curator\Config\PathGenerator\PathGenerator;
-use Awcodes\Curator\Config\PathGenerator\UserPathGenerator;
 use Closure;
 use Filament\Support\Concerns\EvaluatesClosures;
-use Illuminate\Support\Str;
 
 class Curator
 {
@@ -20,9 +16,9 @@ class Curator
 
     protected string $navigationIcon = 'heroicon-o-photograph';
 
-    protected string $tableActionType = 'link';
+    protected bool | Closure | null $tableHasIconActions = false;
 
-    protected string $tableLayout = 'table';
+    protected bool | Closure | null $tableHasGridLayout = true;
 
     protected bool|Closure $shouldPreserveFilenames = false;
 
@@ -56,16 +52,16 @@ class Curator
         return $this;
     }
 
-    public function tableActionType(string $actionType): static
+    public function tableHasIconActions(bool|Closure|null $condition = false): static
     {
-        $this->tableActionType = $actionType;
+        $this->tableHasIconActions = $condition;
 
         return $this;
     }
 
-    public function tableLayout(string $layout): static
+    public function tableHasGridLayout(bool|Closure|null $condition = true): static
     {
-        $this->tableLayout = $layout;
+        $this->tableHasGridLayout = $condition;
 
         return $this;
     }
@@ -152,22 +148,14 @@ class Curator
         return $this->navigationIcon;
     }
 
-    public function getTableActionType(): string
+    public function shouldTableHaveIconActions(): string
     {
-        if (! in_array($this->tableActionType, ['icon', 'link'])) {
-            return 'link';
-        }
-
-        return $this->tableActionType;
+        return $this->tableHasIconActions;
     }
 
-    public function getTableLayout(): string
+    public function shouldTableHaveGridLayout(): string
     {
-        if (! in_array($this->tableLayout, ['table', 'grid'])) {
-            return 'table';
-        }
-
-        return $this->tableLayout;
+        return $this->tableHasGridLayout;
     }
 
     public function shouldPreserveFilenames(): bool

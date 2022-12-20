@@ -10,7 +10,7 @@
             width="{{ $record['width'] }}"
             height="{{ $record['height'] }}"
             loading="lazy"
-            class="overflow-hidden border border-gray-300 rounded dark:border-black checkered"
+            class="overflow-hidden border border-gray-300 rounded dark:border-gray-900 checkered"
         />
     @else
         <x-curator::document-image

@@ -6,6 +6,7 @@ return [
         'file' => 'File',
         'meta' => 'Meta',
         'preview' => 'Preview',
+        'upload_new' => 'Upload New',
     ],
     'fields' => [
         'alt' => 'Alt Text',

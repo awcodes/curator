@@ -15,7 +15,12 @@
     linear-gradient(135deg, transparent 75%, theme("colors.gray.700") 75%);
 }
 
+
 .filament-resources-media {
+    .filament-forms-tabs-component-header {
+        @apply bg-gray-100 dark:bg-gray-900;
+    }
+
     .filament-tables-component {
         .filament-tables-record-checkbox {
             z-index: 1;

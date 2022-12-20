@@ -2,6 +2,8 @@
 
 namespace Awcodes\Curator;
 
+use Awcodes\Curator\Models\Media;
+use Awcodes\Curator\Observers\MediaObserver;
 use Filament\PluginServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
@@ -37,6 +39,8 @@ class CuratorServiceProvider extends PluginServiceProvider
     public function packageBooted(): void
     {
         parent::packageBooted();
+
+        Media::observe(MediaObserver::class);
 
         Livewire::component('curator', Components\Curator::class);
 

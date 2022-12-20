@@ -12,7 +12,7 @@ class ListMedia extends ListRecords
 
     protected function getTableContentGrid(): ?array
     {
-        if (app('curator')->getTableLayout() === 'grid') {
+        if (app('curator')->shouldTableHaveGridLayout()) {
             return [
                 'md' => 2,
                 'xl' => 3,

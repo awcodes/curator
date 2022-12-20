@@ -36,30 +36,25 @@ class MediaResource extends Resource
                         Forms\Components\Section::make(__('curator::forms.sections.file'))
                             ->hiddenOn('edit')
                             ->schema([
-                                Uploader::make('file')
-                                    ->disableLabel()
-                                    ->required()
-                                    ->preserveFilenames(app('curator')->shouldPreserveFilenames())
-                                    ->maxWidth(app('curator')->getMaxWidth())
-                                    ->minSize(app('curator')->getMinSize())
-                                    ->maxSize(app('curator')->getMaxSize())
-                                    ->acceptedFileTypes(app('curator')->getAcceptedFileTypes())
-                                    ->disk(app('curator')->getDiskName())
-                                    ->directory(app('curator')->getDirectory())
-                                    ->visibility(app('curator')->getVisibility())
-                                    ->maxFiles(1)
-                                    ->panelAspectRatio('24:9'),
+                                static::getUploaderField()
                             ]),
-                        Forms\Components\Section::make(__('curator::forms.sections.preview'))
+                        Forms\Components\Tabs::make('image')
                             ->hiddenOn('create')
-                            ->schema([
-                                Forms\Components\ViewField::make('preview')
-                                    ->view('curator::components.preview')
-                                    ->disableLabel()
-                                    ->dehydrated(false)
-                                    ->afterStateHydrated(function ($component, $state, $record) {
-                                        $component->state($record);
-                                    }),
+                            ->tabs([
+                                Forms\Components\Tabs\Tab::make(__('curator::forms.sections.preview'))
+                                    ->schema([
+                                        Forms\Components\ViewField::make('preview')
+                                            ->view('curator::components.preview')
+                                            ->disableLabel()
+                                            ->dehydrated(false)
+                                            ->afterStateHydrated(function ($component, $state, $record) {
+                                                $component->state($record);
+                                            }),
+                                    ]),
+                                Forms\Components\Tabs\Tab::make(__('curator::forms.sections.upload_new'))
+                                    ->schema([
+                                        static::getUploaderField()
+                                    ])
                             ]),
                         Forms\Components\Section::make(__('curator::forms.sections.details'))
                             ->schema([
@@ -99,7 +94,7 @@ class MediaResource extends Resource
     {
         return $table
             ->columns(array_merge(
-                app('curator')->getTableLayout() == 'grid'
+                app('curator')->shouldTableHaveGridLayout()
                     ? static::getDefaultGridTableColumns()
                     : static::getDefaultTableColumns(),
             ))
@@ -107,8 +102,8 @@ class MediaResource extends Resource
 
             ])
             ->actions([
-                app('curator')->getTableActionType() == 'icon' ? Tables\Actions\EditAction::make()->iconButton() : Tables\Actions\EditAction::make(),
-                app('curator')->getTableActionType() == 'icon' ? Tables\Actions\DeleteAction::make()->iconButton() : Tables\Actions\DeleteAction::make(),
+                app('curator')->shouldTableHaveIconActions() ? Tables\Actions\EditAction::make()->iconButton() : Tables\Actions\EditAction::make(),
+                app('curator')->shouldTableHaveIconActions() ? Tables\Actions\DeleteAction::make()->iconButton() : Tables\Actions\DeleteAction::make(),
             ]);
     }
 
@@ -194,5 +189,22 @@ class MediaResource extends Resource
                 ->label(__('curator::forms.fields.description'))
                 ->rows(2),
         ];
+    }
+
+    public static function getUploaderField(): Uploader
+    {
+        return Uploader::make('file')
+            ->disableLabel()
+            ->required()
+            ->preserveFilenames(app('curator')->shouldPreserveFilenames())
+            ->maxWidth(app('curator')->getMaxWidth())
+            ->minSize(app('curator')->getMinSize())
+            ->maxSize(app('curator')->getMaxSize())
+            ->acceptedFileTypes(app('curator')->getAcceptedFileTypes())
+            ->disk(app('curator')->getDiskName())
+            ->directory(app('curator')->getDirectory())
+            ->visibility(app('curator')->getVisibility())
+            ->maxFiles(1)
+            ->panelAspectRatio('24:9');
     }
 }
