@@ -47,9 +47,9 @@ public function register()
         ->directory(string|Closure)
         ->visibility(string|Closure)
         ->cloudDisks(array)
-        ->imageCropAspectRatio(string | Closure | null $ratio)
-        ->imageResizeTargetHeight(string | Closure | null $height)
-        ->imageResizeTargetWidth(string | Closure | null $width);
+        ->imageCropAspectRatio(string|Closure|null $ratio)
+        ->imageResizeTargetHeight(string|Closure|null $height)
+        ->imageResizeTargetWidth(string|Closure|null $width);
 }
 ```
 
@@ -246,7 +246,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Adam Weston](https://github.com/awcodes)
-- [The PHP League](https://glide.thephpleague.com/)
+- [The PHP League](https://glide.thephpleague.com/) for the awesome Glide package.
 - [All Contributors](../../contributors)
 
 ## License
