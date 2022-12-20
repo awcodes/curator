@@ -143,7 +143,7 @@
                     <button
                         type="button"
                         x-on:click.prevent="loadMoreFiles()"
-                        class="absolute inset-0 flex items-center justify-center !bg-gray-700 focus:outline focus:outline-offset-1 focus:outline-2 focus:outline-primary-500 focus:shadow-lg"
+                        class="flex items-center w-full h-full justify-center !bg-gray-700 focus:outline focus:outline-offset-1 focus:outline-2 focus:outline-primary-500 focus:shadow-lg"
                     >
                         {{ __('curator::views.modal.load_more') }}
                     </button>

@@ -5,6 +5,7 @@ namespace Awcodes\Curator\Resources;
 use Awcodes\Curator\Components\CuratorColumn;
 use Awcodes\Curator\Components\Uploader;
 use Awcodes\Curator\Models\Media;
+use Exception;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -69,8 +70,8 @@ class MediaResource extends Resource
                             ]),
                     ])
                     ->columnSpan([
-                        'lg' => 'full',
-                        'xl' => 2,
+                        'md' => 'full',
+                        'lg' => 2,
                     ]),
                 Forms\Components\Group::make()
                     ->schema([
@@ -79,8 +80,8 @@ class MediaResource extends Resource
                                 static::getAdditionalInformationFormSchema()
                             ),
                     ])->columnSpan([
-                        'lg' => 'full',
-                        'xl' => 1,
+                        'md' => 'full',
+                        'lg' => 1,
                     ]),
             ])->columns([
                 'lg' => 3,
@@ -88,7 +89,7 @@ class MediaResource extends Resource
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function table(Table $table): Table
     {

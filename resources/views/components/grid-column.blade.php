@@ -8,9 +8,9 @@
     <div class="absolute inset-0 h-[175px] z-0 rounded-t-xl overflow-hidden">
         @if (\Awcodes\Curator\Facades\Curator::isResizable($record->ext))
             <img
-                src="/curator/{{ $record->path }}?w=400&h=175&fit=crop&fm=webp"
+                src="/curator/{{ $record->path }}?w=640&h=320&fit=crop&fm=webp"
                 alt="{{ $record->alt }}"
-                class="object-cover h-full"
+                class="object-cover h-full w-full"
             />
         @else
             <x-curator::document-image
