@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static directory(string | Closure $directory)
  * @method static visibility(string | Closure $visibility)
  * @method static cloudDisks(array $disks)
+ * @method static imageCropAspectRatio(string | Closure | null $ratio)
+ * @method static imageResizeTargetHeight(string | Closure | null $height)
+ * @method static imageResizeTargetWidth(string | Closure | null $width)
  * @method static string getResourceLabel()
  * @method static string getNavigationIcon()
  * @method static string shouldTableHaveIconActions()
@@ -32,6 +35,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getDirectory()
  * @method static string getVisibility()
  * @method static array getCloudDisks()
+ * @method static array getImageCropAspectRatio()
+ * @method static array getImageResizeTargetHeight()
+ * @method static array getImageResizeTargetWidth()
  * @method static bool isResizable(string $ext)
  *
  * @see \Awcodes\Curator\Curator

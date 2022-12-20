@@ -8,9 +8,9 @@ A media picker/manager plugin for Filament Admin.
 > **Warning**
 > This package does not work with Spatie Media Library.
 
-![Gallery View](./images/dark-gallery-selected.png)
-![Upload View](./images/dark-gallery.png)
-![Field View](./images/dark-media-picker-filled.png)
+![Upload View](./images/2.x/dark-gallery.png)
+![Gallery View](./images/2.x/dark-gallery-selected.png)
+![Field View](./images/2.x/dark-field.png)
 
 ## Installation
 
@@ -27,7 +27,7 @@ php artisan curator:install
 
 Global settings for Curator are handled through the `Curator` facade.
 Inside the `register()` method of a service provider you can customize the 
-behaviour of Curator's resources.
+behaviour of Curator's resources. All methods are optional.
 
 ```php
 use Awcodes\Curator\Facades\Curator;
@@ -46,7 +46,10 @@ public function register()
         ->disk(string|Closure)
         ->directory(string|Closure)
         ->visibility(string|Closure)
-        ->cloudDisks(array);
+        ->cloudDisks(array)
+        ->imageCropAspectRatio(string | Closure | null $ratio)
+        ->imageResizeTargetHeight(string | Closure | null $height)
+        ->imageResizeTargetWidth(string | Closure | null $width);
 }
 ```
 
@@ -149,8 +152,8 @@ See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-refer
 
 **Special attributes**
 
-- media: id (int) or (Media) model instance
-- loading: default to 'lazy'
+- media: id (int) or (Media) model instance (***required***)
+- loading: defaults to 'lazy'
 - glide: this can be used to pass in a glide query string if you do not want to use individual attributes
 
 ```html
@@ -242,7 +245,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [awcodes](https://github.com/awcodes)
+- [Adam Weston](https://github.com/awcodes)
+- [The PHP League](https://glide.thephpleague.com/)
 - [All Contributors](../../contributors)
 
 ## License

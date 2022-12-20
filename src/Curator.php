@@ -38,6 +38,12 @@ class Curator
 
     protected array $cloudDisks = ['s3', 'cloudinary', 'imgix'];
 
+    protected string | Closure | null $imageCropAspectRatio = null;
+
+    protected string | Closure | null $imageResizeTargetHeight = null;
+
+    protected string | Closure | null $imageResizeTargetWidth = null;
+
     public function resourceLabel(string|Closure $label): static
     {
         $this->resourceLabel = $label;
@@ -138,6 +144,27 @@ class Curator
         return $this;
     }
 
+    public function imageCropAspectRatio(string | Closure | null $ratio): static
+    {
+        $this->imageCropAspectRatio = $ratio;
+
+        return $this;
+    }
+
+    public function imageResizeTargetHeight(string | Closure | null $height): static
+    {
+        $this->imageResizeTargetHeight = $height;
+
+        return $this;
+    }
+
+    public function imageResizeTargetWidth(string | Closure | null $width): static
+    {
+        $this->imageResizeTargetWidth = $width;
+
+        return $this;
+    }
+
     public function getResourceLabel(): string
     {
         return $this->evaluate($this->resourceLabel);
@@ -201,6 +228,21 @@ class Curator
     public function getCloudDisks(): array
     {
         return $this->cloudDisks;
+    }
+
+    public function getImageCropAspectRatio(): ?string
+    {
+        return $this->evaluate($this->imageCropAspectRatio);
+    }
+
+    public function getImageResizeTargetHeight(): ?string
+    {
+        return $this->evaluate($this->imageResizeTargetHeight);
+    }
+
+    public function getImageResizeTargetWidth(): ?string
+    {
+        return $this->evaluate($this->imageResizeTargetWidth);
     }
 
     private function getPathInfo(string $filename): array
