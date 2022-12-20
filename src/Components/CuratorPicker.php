@@ -92,7 +92,7 @@ class CuratorPicker extends Field
         ) {
             $path = resolve($directory)->getPath($this->curatorDirectory);
         } else {
-            $path = $directory ?? $this->curatorDirectory;
+            $path = $directory ?? app('curator')->getDirectory();
         }
 
         $this->curatorDirectory = $this->normalizePath($path);

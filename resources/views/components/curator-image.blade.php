@@ -3,12 +3,12 @@
          alt="{{ $media->alt }}"
          width="{{ $media->width }}"
          height="{{ $media->height }}"
-         loading="lazy"
+         loading="{{ $loading }}"
          {{ $attributes }}
     />
 @else
     <x-curator::document-image
-        label="{{ $media->filename }}"
+        label="{{ $media->name }}"
         icon-size="xl"
         {{ $attributes->merge(['class' => 'p-4']) }}
     />
