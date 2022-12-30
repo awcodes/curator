@@ -27,6 +27,8 @@ class Curator extends Component implements HasForms
 
     public $directory;
 
+    public $pathGenerator;
+
     public $shouldPreserveFilenames;
 
     public $maxWidth;
@@ -77,10 +79,10 @@ class Curator extends Component implements HasForms
                 ->disk($this->diskName)
                 ->visibility($this->visibility)
                 ->directory($this->directory)
+                ->pathGenerator($this->pathGenerator)
                 ->imageCropAspectRatio($this->imageCropAspectRatio)
                 ->imageResizeTargetWidth($this->imageResizeTargetWidth)
-                ->imageResizeTargetHeight($this->imageResizeTargetHeight)
-                ->panelAspectRatio('1:1'),
+                ->imageResizeTargetHeight($this->imageResizeTargetHeight),
         ];
     }
 

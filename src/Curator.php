@@ -34,6 +34,8 @@ class Curator
 
     protected string|Closure $directory = 'media';
 
+    protected string|null $pathGenerator = null;
+
     protected string|Closure $visibility = 'public';
 
     protected array $cloudDisks = ['s3', 'cloudinary', 'imgix'];
@@ -114,18 +116,16 @@ class Curator
         return $this;
     }
 
-    public function directory(Closure|PathGenerator|string|null $directory): static
+    public function directory(Closure|string|null $directory): static
     {
-        if (
-            class_exists($directory) &&
-            is_subclass_of($directory, PathGenerator::class)
-        ) {
-            $path = resolve($directory)->getPath($this->directory);
-        } else {
-            $path = $directory ?? $this->directory;
-        }
+        $this->directory = $directory;
 
-        $this->directory = $this->normalizePath($path);
+        return $this;
+    }
+
+    public function pathGenerator(string|null $generator): static
+    {
+        $this->pathGenerator = $generator;
 
         return $this;
     }
@@ -213,6 +213,11 @@ class Curator
     public function getDiskName(): string
     {
         return $this->evaluate($this->diskName);
+    }
+
+    public function getPathGenerator(): ?string
+    {
+        return $this->pathGenerator;
     }
 
     public function getDirectory(): string

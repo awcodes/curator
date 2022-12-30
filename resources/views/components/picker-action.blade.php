@@ -2,6 +2,7 @@
     :state-path="$statePath"
     :modal-id="$modalId"
     :directory="$directory"
+    :path-generator="$pathGenerator"
     :should-preserve-filenames="$shouldPreserveFilenames"
     :max-width="$maxWidth"
     :min-size="$minSize"

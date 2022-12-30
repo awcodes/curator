@@ -27,6 +27,7 @@ class PickerAction extends Action
                 'statePath' => $component->getStatePath(),
                 'modalId' => $component->getLivewire()->id.'-form-component-action',
                 'directory' => $component->getDirectory(),
+                'pathGenerator' => $component->getPathGenerator(),
                 'shouldPreserveFilenames' => $component->shouldPreserveFilenames(),
                 'maxWidth' => $component->getMaxWidth(),
                 'minSize' => $component->getMinSize(),

@@ -5,7 +5,6 @@ namespace Awcodes\Curator\Components;
 use Awcodes\Curator\Actions\DownloadAction;
 use Awcodes\Curator\Actions\PickerAction;
 use Awcodes\Curator\Concerns\CanNormalizePaths;
-use Awcodes\Curator\Config\PathGenerator\PathGenerator;
 use Awcodes\Curator\Models\Media;
 use Closure;
 use Exception;
@@ -36,6 +35,8 @@ class CuratorPicker extends Field
 
     protected string|Closure|null $curatorDirectory = 'media';
 
+    protected string|null $curatorPathGenerator = null;
+
     protected string|Closure|null $curatorVisibility = 'public';
 
     protected array|Closure $curatorAcceptedFileTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'application/pdf'];
@@ -64,6 +65,9 @@ class CuratorPicker extends Field
         $this->color = 'primary';
         $this->isOutlined = true;
 
+        $this->curatorDirectory = app('curator')->getDirectory();
+        $this->curatorPathGenerator = app('curator')->getPathGenerator();
+
         $this->registerActions([
             PickerAction::make(),
             DownloadAction::make(),
@@ -84,18 +88,16 @@ class CuratorPicker extends Field
         return $this;
     }
 
-    public function directory(Closure|PathGenerator|string|null $directory): static
+    public function directory(Closure|string $directory): static
     {
-        if (
-            class_exists($directory) &&
-            is_subclass_of($directory, PathGenerator::class)
-        ) {
-            $path = resolve($directory)->getPath($this->curatorDirectory);
-        } else {
-            $path = $directory ?? app('curator')->getDirectory();
-        }
+        $this->curatorDirectory = $directory;
 
-        $this->curatorDirectory = $this->normalizePath($path);
+        return $this;
+    }
+
+    public function pathGenerator(string|null $generator): static
+    {
+        $this->curatorPathGenerator = $generator;
 
         return $this;
     }
@@ -174,6 +176,11 @@ class CuratorPicker extends Field
     public function getDirectory(): ?string
     {
         return $this->evaluate($this->curatorDirectory);
+    }
+
+    public function getPathGenerator(): ?string
+    {
+        return $this->curatorPathGenerator;
     }
 
     public function getDiskName(): string

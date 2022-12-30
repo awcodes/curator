@@ -204,6 +204,7 @@ class MediaResource extends Resource
             ->acceptedFileTypes(app('curator')->getAcceptedFileTypes())
             ->disk(app('curator')->getDiskName())
             ->directory(app('curator')->getDirectory())
+            ->pathGenerator(app('curator')->getPathGenerator())
             ->visibility(app('curator')->getVisibility())
             ->maxFiles(1)
             ->panelAspectRatio('24:9');

@@ -2,6 +2,8 @@
 
 namespace Awcodes\Curator\Components;
 
+use Awcodes\Curator\Concerns\CanNormalizePaths;
+use Awcodes\Curator\Config\PathGenerator\PathGenerator;
 use Awcodes\Curator\Facades\Curator;
 use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Components\FileUpload;
@@ -12,6 +14,10 @@ use Livewire\TemporaryUploadedFile;
 
 class Uploader extends FileUpload
 {
+    use CanNormalizePaths;
+
+    protected string|null $pathGenerator = null;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -46,6 +52,35 @@ class Uploader extends FileUpload
                 'ext' => $extension,
             ];
         });
+    }
+
+    public function pathGenerator(string|null $generator): static
+    {
+        $this->pathGenerator = $generator;
+
+        return $this;
+    }
+
+    public function getDirectory(): ?string
+    {
+        $directory = $this->directory ?? app('curator')->getDirectory();
+        $generator = $this->getPathGenerator() ?? app('curator')->getPathGenerator();
+
+        if (
+            class_exists($generator) &&
+            (new \ReflectionClass($generator))->implementsInterface(PathGenerator::class)
+        ) {
+            $path = resolve($generator)->getPath($directory);
+        } else {
+            $path = $this->evaluate($this->directory);
+        }
+
+        return $this->normalizePath($path);
+    }
+
+    public function getPathGenerator(): ?string
+    {
+        return $this->pathGenerator;
     }
 
     public function saveUploadedFiles(): void

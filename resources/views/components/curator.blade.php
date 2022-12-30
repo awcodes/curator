@@ -76,7 +76,7 @@
      class="curator h-full absolute inset-0 flex flex-col"
 >
 
-    <div class="flex-1 relative flex flex-col md:flex-row overflow-hidden">
+    <div class="flex-1 relative flex flex-col lg:flex-row overflow-hidden">
         <div
             x-show="isFetching"
             x-cloak
@@ -159,16 +159,17 @@
             </ul>
         </div> <!-- gallery -->
 
-        <div class="w-full md:h-full md:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top md:shadow-none" style="z-index: 1;">
+        <div class="w-full lg:h-full lg:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top lg:shadow-none" style="z-index: 1;">
 
-            <label class="border-b border-gray-300 dark:border-gray-800">
+            <label class="border-b border-gray-300 dark:border-gray-800 relative">
                 <span class="sr-only">{{ __('curator::views.modal.search_label') }}</span>
+                @svg('heroicon-o-search', 'w-4 h-4 absolute top-3 left-3 rtl:left-0 rtl:right-3 dark:text-gray-500')
                 <input
                     type="search"
                     wire:ignore
                     placeholder="{{ __('curator::views.modal.search_placeholder') }}"
                     x-on:input.debounce.500ms="searchFiles"
-                    class="block w-full transition duration-75 border-none focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-black/10 dark:text-white"
+                    class="block w-full transition pl-10 rtl:pl-3 rtl:pr-10 duration-75 border-none focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-black/10 dark:text-white"
                 />
             </label>
 
