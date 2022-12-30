@@ -28,6 +28,7 @@ class MediaAction extends Action
                 'statePath' => $component->getStatePath(),
                 'modalId' => $component->getLivewire()->id.'-form-component-action',
                 'directory' => app('curator')->getDirectory(),
+                'pathGenerator' => app('curator')->getPathGenerator(),
                 'shouldPreserveFilenames' => app('curator')->shouldPreserveFilenames(),
                 'maxWidth' => app('curator')->getMaxWidth(),
                 'minSize' => app('curator')->getMinSize(),

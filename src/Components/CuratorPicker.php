@@ -4,7 +4,6 @@ namespace Awcodes\Curator\Components;
 
 use Awcodes\Curator\Actions\DownloadAction;
 use Awcodes\Curator\Actions\PickerAction;
-use Awcodes\Curator\Concerns\CanNormalizePaths;
 use Awcodes\Curator\Models\Media;
 use Closure;
 use Exception;
@@ -16,14 +15,12 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class CuratorPicker extends Field
 {
     use HasColor;
     use HasSize;
     use CanBeOutlined;
-    use CanNormalizePaths;
 
     protected string $view = 'curator::components.picker';
 

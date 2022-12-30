@@ -2,23 +2,20 @@
 
 namespace Awcodes\Curator;
 
-use Awcodes\Curator\Concerns\CanNormalizePaths;
-use Awcodes\Curator\Config\PathGenerator\PathGenerator;
 use Closure;
 use Filament\Support\Concerns\EvaluatesClosures;
 
 class Curator
 {
     use EvaluatesClosures;
-    use CanNormalizePaths;
 
     protected string|Closure $resourceLabel = 'Media';
 
     protected string $navigationIcon = 'heroicon-o-photograph';
 
-    protected bool | Closure | null $tableHasIconActions = false;
+    protected bool|Closure|null $tableHasIconActions = false;
 
-    protected bool | Closure | null $tableHasGridLayout = true;
+    protected bool|Closure|null $tableHasGridLayout = true;
 
     protected bool|Closure $shouldPreserveFilenames = false;
 
@@ -40,11 +37,11 @@ class Curator
 
     protected array $cloudDisks = ['s3', 'cloudinary', 'imgix'];
 
-    protected string | Closure | null $imageCropAspectRatio = null;
+    protected string|Closure|null $imageCropAspectRatio = null;
 
-    protected string | Closure | null $imageResizeTargetHeight = null;
+    protected string|Closure|null $imageResizeTargetHeight = null;
 
-    protected string | Closure | null $imageResizeTargetWidth = null;
+    protected string|Closure|null $imageResizeTargetWidth = null;
 
     public function resourceLabel(string|Closure $label): static
     {
@@ -144,21 +141,21 @@ class Curator
         return $this;
     }
 
-    public function imageCropAspectRatio(string | Closure | null $ratio): static
+    public function imageCropAspectRatio(string|Closure|null $ratio): static
     {
         $this->imageCropAspectRatio = $ratio;
 
         return $this;
     }
 
-    public function imageResizeTargetHeight(string | Closure | null $height): static
+    public function imageResizeTargetHeight(string|Closure|null $height): static
     {
         $this->imageResizeTargetHeight = $height;
 
         return $this;
     }
 
-    public function imageResizeTargetWidth(string | Closure | null $width): static
+    public function imageResizeTargetWidth(string|Closure|null $width): static
     {
         $this->imageResizeTargetWidth = $width;
 
