@@ -79,7 +79,8 @@ class Curator extends Component implements HasForms
                 ->directory($this->directory)
                 ->imageCropAspectRatio($this->imageCropAspectRatio)
                 ->imageResizeTargetWidth($this->imageResizeTargetWidth)
-                ->imageResizeTargetHeight($this->imageResizeTargetHeight),
+                ->imageResizeTargetHeight($this->imageResizeTargetHeight)
+                ->panelAspectRatio('1:1'),
         ];
     }
 

@@ -4,7 +4,7 @@
     @php
         $height = $getHeight();
         $width = $getWidth() ?? ($isRounded() ? $height : null);
-        $record = $getRecord();
+        $media = $getMedia();
     @endphp
 
     <div style="
@@ -15,7 +15,7 @@
     >
         @if ($isImage())
             <img
-                src="/curator/{{ $record->path }}?w=50&h=50&fit=crop&fm=webp"
+                src="/curator/{{ $media->path }}?w=50&h=50&fit=crop&fm=webp"
                 style="
                     {!! $height !== null ? "height: {$height};" : null !!}
                     {!! $width !== null ? "width: {$width};" : null !!}
@@ -25,7 +25,7 @@
             />
         @else
             <x-curator::document-image
-                label="{{ $record->filename }}"
+                label="{{ $media->name }}"
                 icon-size="md"
             />
         @endif

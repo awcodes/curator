@@ -23,7 +23,6 @@ class CuratorServiceProvider extends PluginServiceProvider
             ->hasMigration('create_media_table')
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations();
             });

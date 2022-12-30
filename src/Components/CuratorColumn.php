@@ -17,7 +17,7 @@ class CuratorColumn extends ImageColumn
 
         if (filled($state)) {
             if (is_a($state, Media::class)) {
-                $url = $state->filename;
+                $url = $state->path;
             } else {
                 $url = $state;
             }
@@ -28,5 +28,16 @@ class CuratorColumn extends ImageColumn
         }
 
         return false;
+    }
+
+    public function getMedia(): Media
+    {
+        $record = $this->getRecord();
+
+        if (! is_a($record, Media::class)) {
+            return $this->getState();
+        }
+
+        return $record;
     }
 }

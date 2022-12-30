@@ -73,7 +73,7 @@
      x-on:insert-media.window="$dispatch('close-modal', { id: '{{ $modalId }}' })"
      x-on:new-media-added.window="addNewFile($event.detail.media)"
      x-on:remove-media.window="removeFile($event.detail.media)"
-     class="filament-curator h-full absolute inset-0 flex flex-col"
+     class="curator h-full absolute inset-0 flex flex-col"
 >
 
     <div class="flex-1 relative flex flex-col md:flex-row overflow-hidden">
