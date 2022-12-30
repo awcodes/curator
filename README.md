@@ -45,11 +45,12 @@ public function register()
         ->maxSize(int|Closure)
         ->disk(string|Closure)
         ->directory(string|Closure)
+        ->pathGenerator(string|null)
         ->visibility(string|Closure)
         ->cloudDisks(array)
-        ->imageCropAspectRatio(string|Closure|null $ratio)
-        ->imageResizeTargetHeight(string|Closure|null $height)
-        ->imageResizeTargetWidth(string|Closure|null $width);
+        ->imageCropAspectRatio(string|Closure|null)
+        ->imageResizeTargetHeight(string|Closure|null)
+        ->imageResizeTargetWidth(string|Closure|null);
 }
 ```
 
@@ -70,6 +71,7 @@ CuratorPicker::make(string $fieldName)
     ->outlined(true|false) // defaults to true
     ->size('sm|md|lg') // defaults to md
     ->fitContent(true|false) // defaults to false (forces image to fit inside the preview area)
+    ->pathGenerator(DatePathGenerator::class|UserPathGenerator::class) // see path generators below
     // see https://filamentphp.com/docs/2.x/forms/fields#file-upload for more information about the following methods
     ->preserveFilenames()
     ->maxWidth()
@@ -107,7 +109,7 @@ Just set the one you want to use the `register()` method of a service provider.
 ```php
 public function register()
 {
-    Curator::directory(DataPathGenerator::class);
+    Curator::pathGenerator(DatePathGenerator::class);
 }
 ```
 
@@ -138,14 +140,23 @@ Path Generators can also be passed into the `directory()` method on the
 `CuratorPicker` field for per instance use.
 
 ```php
-MediaPicker::make(string $fieldName)
+CuratorPicker::make(string $fieldName)
     ->label(string $customLabel)
-    ->directory(CustomPathGenerator::class),
+    ->pathGenerator(CustomPathGenerator::class),
+```
+
+### Curator Column
+
+To render your media in a table Curator comes with an `CuratorColumn` which has the same methods as Filament's ImageColumn.
+
+```php
+CuratorColumn::make('featured_image')
+    ->size(40)
 ```
 
 ### Curator Image Component
 
-To make it as easy as possible to output your media Curator comes with a 
+To make it as easy as possible to output your media, Curator comes with an 
 `<x-curator-image>` blade component.
 
 See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-reference/) for more information about Glide's options
