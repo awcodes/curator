@@ -166,10 +166,10 @@ CuratorColumn::make('featured_image')
     ->size(40)
 ```
 
-### Curator Image Component
+### Glider Blade Component
 
 To make it as easy as possible to output your media, Curator comes with an 
-`<x-curator-image>` blade component.
+`<x-curator-glider>` blade component.
 
 See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-reference/) for more information about Glide's options
 
@@ -181,7 +181,7 @@ See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-refer
 
 ```html
 <div class="aspect-video w-64">
-    <x-curator-image
+    <x-curator-glider
         class="object-cover w-auto"
         :media="1" 
         loading=""
