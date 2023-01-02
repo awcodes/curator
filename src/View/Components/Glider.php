@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CuratorImage extends Component
+class Glider extends Component
 {
     public string $source;
 
@@ -89,7 +89,7 @@ class CuratorImage extends Component
             $this->source = $this->buildGlideSource();
         }
 
-        return view('curator::components.curator-image', [
+        return view('curator::components.glider', [
             'media' => $this->media,
             'source' => $this->source,
             'loading' => $this->loading,
