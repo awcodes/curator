@@ -62,7 +62,7 @@ from Filament's `FileUpload` component can be used to help with sizing,
 validation, etc. for specific instances of each CuratorPicker.
 
 ```php
-use Awcodes\Curator\Components\CuratorPicker;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
 
 CuratorPicker::make(string $fieldName)
     ->label(string $customLabel)
@@ -125,7 +125,7 @@ You are also free to use your own Path Generators by implementing the
 `PathGenerator` interface on your own classes.
 
 ```php
-use Awcodes\Curator\Config\PathGenerator;
+use Awcodes\Curator\Generators;
 
 class CustomPathGenerator implements PathGenerator
 {
@@ -212,7 +212,7 @@ that you swap your own model and resources in the service container.
 ```php
 use Awcodes\Curator\Models\Media;
 
-class YourNotAsCoolMediaModel extends Meida
+class YourNotAsCoolMediaModel extends Media
 {
     // ... custom methods and properties
 }

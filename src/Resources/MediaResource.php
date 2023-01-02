@@ -2,8 +2,8 @@
 
 namespace Awcodes\Curator\Resources;
 
-use Awcodes\Curator\Components\CuratorColumn;
-use Awcodes\Curator\Components\Uploader;
+use Awcodes\Curator\Components\Forms\Uploader;
+use Awcodes\Curator\Components\Tables\CuratorColumn;
 use Awcodes\Curator\Models\Media;
 use Exception;
 use Filament\Forms;
@@ -45,7 +45,7 @@ class MediaResource extends Resource
                                 Forms\Components\Tabs\Tab::make(__('curator::forms.sections.preview'))
                                     ->schema([
                                         Forms\Components\ViewField::make('preview')
-                                            ->view('curator::components.preview')
+                                            ->view('curator::components.forms.preview')
                                             ->disableLabel()
                                             ->dehydrated(false)
                                             ->afterStateHydrated(function ($component, $state, $record) {
@@ -60,7 +60,7 @@ class MediaResource extends Resource
                         Forms\Components\Section::make(__('curator::forms.sections.details'))
                             ->schema([
                                 Forms\Components\ViewField::make('details')
-                                    ->view('curator::components.details')
+                                    ->view('curator::components.forms.details')
                                     ->disableLabel()
                                     ->dehydrated(false)
                                     ->columnSpan('full')
@@ -149,7 +149,7 @@ class MediaResource extends Resource
     public static function getDefaultGridTableColumns(): array
     {
         return [
-            Tables\Columns\Layout\View::make('curator::components.grid-column'),
+            Tables\Columns\Layout\View::make('curator::components.tables.grid-column'),
             Tables\Columns\TextColumn::make('name')
                 ->label(__('curator::tables.columns.name'))
                 ->extraAttributes(['class' => 'hidden'])

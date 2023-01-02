@@ -15,7 +15,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Awcodes\\Curator\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Awcodes\\CuratorPanel\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 

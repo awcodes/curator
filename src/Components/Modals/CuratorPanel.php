@@ -1,7 +1,8 @@
 <?php
 
-namespace Awcodes\Curator\Components;
+namespace Awcodes\Curator\Components\Modals;
 
+use Awcodes\Curator\Components\Forms\Uploader;
 use Awcodes\Curator\Models\Media;
 use Awcodes\Curator\Resources\MediaResource;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class Curator extends Component implements HasForms
+class CuratorPanel extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -160,6 +161,6 @@ class Curator extends Component implements HasForms
 
     public function render(): View
     {
-        return view('curator::components.curator');
+        return view('curator::components.modals.curator-panel');
     }
 }

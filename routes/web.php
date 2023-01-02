@@ -1,6 +1,7 @@
 <?php
 
 use Awcodes\Curator\Http\Controllers\MediaController;
+use Illuminate\Support\Facades\Route;
 
 Route::domain(config('filament.domain'))
     ->middleware((config('filament.middleware.base')))

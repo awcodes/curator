@@ -1,6 +1,6 @@
 <?php
 
-namespace Awcodes\Curator\Components;
+namespace Awcodes\Curator\Components\Forms;
 
 use Awcodes\Curator\Actions\DownloadAction;
 use Awcodes\Curator\Actions\PickerAction;
@@ -22,7 +22,7 @@ class CuratorPicker extends Field
     use HasSize;
     use CanBeOutlined;
 
-    protected string $view = 'curator::components.picker';
+    protected string $view = 'curator::components.forms.picker';
 
     protected string|Htmlable|Closure|null $buttonLabel = null;
 

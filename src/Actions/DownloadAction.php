@@ -2,7 +2,8 @@
 
 namespace Awcodes\Curator\Actions;
 
-use Awcodes\Curator\Components\CuratorPicker;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
+use Awcodes\Curator\Models\Media;
 use Filament\Forms\Components\Actions\Action;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -19,9 +20,9 @@ class DownloadAction extends Action
         parent::setUp();
 
         $this->action(function (CuratorPicker $component): StreamedResponse {
-            $item = resolve(config('filament-curator.model'))->where('id', $component->getState())->first();
+            $item = Media::where('id', $component->getState())->first();
 
-            return Storage::disk($item['disk'])->download($item['filename']);
+            return Storage::disk($item['disk'])->download($item['path']);
         });
     }
 }

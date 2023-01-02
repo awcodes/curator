@@ -1,6 +1,6 @@
 <?php
 
-namespace Awcodes\Curator\Components;
+namespace Awcodes\Curator\Components\Tables;
 
 use Awcodes\Curator\Facades\Curator;
 use Awcodes\Curator\Models\Media;
@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class CuratorColumn extends ImageColumn
 {
-    protected string $view = 'curator::components.curator-column';
+    protected string $view = 'curator::components.tables.curator-column';
 
     public function isImage(): bool
     {

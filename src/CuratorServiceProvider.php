@@ -41,7 +41,7 @@ class CuratorServiceProvider extends PluginServiceProvider
 
         Media::observe(MediaObserver::class);
 
-        Livewire::component('curator', Components\Curator::class);
+        Livewire::component('curator-panel', Components\Modals\CuratorPanel::class);
 
         Blade::component('curator-image', View\Components\CuratorImage::class);
     }

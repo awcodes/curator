@@ -1,4 +1,4 @@
-<livewire:curator
+<livewire:curator-panel
     :state-path="$statePath"
     :modal-id="$modalId"
     :directory="$directory"

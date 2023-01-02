@@ -1,11 +1,11 @@
 @php
-$record = $getRecord();
-$labelClasses = 'text-sm font-medium leading-4 text-gray-700 dark:text-gray-300';
-$dataClasses = 'mt-2';
-$dimensions = '-';
-if (filled($record) && ($record->width && $record->height)) {
-    $dimensions = $record->width . ' x ' . $record->height;
-}
+    $record = $getRecord();
+    $labelClasses = 'text-sm font-medium leading-4 text-gray-700 dark:text-gray-300';
+    $dataClasses = 'mt-2';
+    $dimensions = '-';
+    if (filled($record) && ($record->width && $record->height)) {
+        $dimensions = $record->width . ' x ' . $record->height;
+    }
 @endphp
 
 <div>
