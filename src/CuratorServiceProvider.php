@@ -2,6 +2,7 @@
 
 namespace Awcodes\Curator;
 
+use Awcodes\Curator\Commands\UpgradeCommand;
 use Awcodes\Curator\Models\Media;
 use Awcodes\Curator\Observers\MediaObserver;
 use Filament\PluginServiceProvider;
@@ -21,6 +22,9 @@ class CuratorServiceProvider extends PluginServiceProvider
             ->hasViews()
             ->hasTranslations()
             ->hasMigration('create_media_table')
+            ->hasCommands([
+                UpgradeCommand::class
+            ])
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishMigrations()

@@ -21,6 +21,18 @@ composer require awcodes/curator
 php artisan curator:install
 ```
 
+## Upgrade
+
+If you are upgrading from 1.x to 2.x you will also need to run:
+
+```bash
+php artisan curator:upgrade
+```
+
+This will update Curator's database schema and create a backup of your media table that can be deleted after upgrade should you choose to do so.
+
+***You will also need to change any references in your codebase from `$media->filename` to `$media->path`.***
+
 ## Usage
 
 ### Global Settings
