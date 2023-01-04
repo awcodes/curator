@@ -11,13 +11,14 @@ return new class extends Migration
         Schema::table('media', function (Blueprint $table) {
             $table->string('name');
             $table->string('path');
+            $table->longText('curations')->nullable();
         });
     }
 
     public function down()
     {
         Schema::table('media', function(Blueprint $table) {
-            $table->dropColumn(['name', 'path']);
+            $table->dropColumn(['name', 'path', 'curations']);
         });
     }
 };

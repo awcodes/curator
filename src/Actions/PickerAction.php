@@ -20,7 +20,7 @@ class PickerAction extends Action
 
         $this->modalActions([]);
 
-        $this->modalHeading(__('curator::views.modal.heading'));
+        $this->modalHeading(__('curator::views.panel.heading'));
 
         $this->modalContent(static function (CuratorPicker $component) {
             return view('curator::components.actions.picker-action', [

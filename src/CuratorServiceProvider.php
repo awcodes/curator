@@ -46,6 +46,7 @@ class CuratorServiceProvider extends PluginServiceProvider
         Media::observe(MediaObserver::class);
 
         Livewire::component('curator-panel', Components\Modals\CuratorPanel::class);
+        Livewire::component('curator-curation', Components\Modals\CuratorCuration::class);
 
         Blade::component('curator-glider', View\Components\Glider::class);
     }
@@ -61,6 +62,13 @@ class CuratorServiceProvider extends PluginServiceProvider
     {
         return [
             'plugin-curator' => __DIR__.'/../resources/dist/curator.css',
+        ];
+    }
+
+    protected function getBeforeCoreScripts(): array
+    {
+        return [
+            'plugin-curator' => __DIR__.'/../resources/dist/curator.js',
         ];
     }
 }

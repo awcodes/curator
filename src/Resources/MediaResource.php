@@ -2,6 +2,7 @@
 
 namespace Awcodes\Curator\Resources;
 
+use Awcodes\Curator\Components\Forms\CuratorEditor;
 use Awcodes\Curator\Components\Forms\Uploader;
 use Awcodes\Curator\Components\Tables\CuratorColumn;
 use Awcodes\Curator\Models\Media;
@@ -52,10 +53,21 @@ class MediaResource extends Resource
                                                 $component->state($record);
                                             }),
                                     ]),
+                                Forms\Components\Tabs\Tab::make(__('curator::forms.sections.curation'))
+                                    ->visible(fn($record) => Str::of($record->type)->contains('image'))
+                                    ->schema([
+                                        Forms\Components\Repeater::make('curations')
+                                            ->schema([
+                                                Forms\Components\TextInput::make('name'),
+                                                CuratorEditor::make('curation')
+                                                    ->disableLabel()
+                                                    ->buttonLabel(__('curator::forms.curations.button_label')),
+                                            ])
+                                    ]),
                                 Forms\Components\Tabs\Tab::make(__('curator::forms.sections.upload_new'))
                                     ->schema([
                                         static::getUploaderField()
-                                    ])
+                                    ]),
                             ]),
                         Forms\Components\Section::make(__('curator::forms.sections.details'))
                             ->schema([

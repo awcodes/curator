@@ -1,3 +1,4 @@
+@import '../../node_modules/cropperjs/dist/cropper.css';
 @tailwind utilities;
 
 .checkered {
@@ -28,7 +29,8 @@
     }
 }
 
-[wire\:key*="curator_picker"] {
+[wire\:key*="curator_picker"],
+[wire\:key*="curator_curation"] {
     .filament-modal-window {
         @apply !p-0;
 

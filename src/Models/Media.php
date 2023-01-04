@@ -3,6 +3,7 @@
 namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
+use Awcodes\Curator\Facades\Curator;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -21,6 +22,7 @@ class Media extends Model
 
     protected $appends = [
         'thumbnail_url',
+        'resizable',
     ];
 
     protected function url(): Attribute
@@ -41,6 +43,13 @@ class Media extends Model
     {
         return Attribute::make(
             get: fn () => Storage::disk($this->disk)->path($this->directory.'/'.$this->name.'.'.$this->ext),
+        );
+    }
+
+    protected function resizable(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Curator::isResizable($this->ext),
         );
     }
 

@@ -7,6 +7,7 @@ return [
         'meta' => 'Meta',
         'preview' => 'Preview',
         'upload_new' => 'Upload New',
+        'curation' => 'Curation',
     ],
     'fields' => [
         'alt' => 'Alt Text',
@@ -20,4 +21,7 @@ return [
     'notices' => [
         'success' => 'Item updated successfully.',
     ],
+    'curations' => [
+        'button_label' => 'Create Curation'
+    ]
 ];
