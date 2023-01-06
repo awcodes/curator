@@ -20,6 +20,7 @@ class Media extends Model
     ];
 
     protected $appends = [
+        'url',
         'thumbnail_url',
     ];
 
