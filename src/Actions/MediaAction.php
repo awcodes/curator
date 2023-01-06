@@ -19,12 +19,12 @@ class MediaAction extends Action
 
         $this->modalWidth('screen');
 
-        $this->modalHeading(__('filament-curator::media-picker-modal.heading'));
+        $this->modalHeading(__('curator::views.modal.heading'));
 
         $this->modalActions(fn () => []);
 
         $this->modalContent(static function (TiptapEditor|CuratorPicker $component) {
-            return view('filament-curator::components.media-action', [
+            return view('curator::components.actions.picker-action', [
                 'statePath' => $component->getStatePath(),
                 'modalId' => $component->getLivewire()->id.'-form-component-action',
                 'directory' => app('curator')->getDirectory(),
