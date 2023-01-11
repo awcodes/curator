@@ -58,4 +58,9 @@ class CuratorEditor extends Field
     {
         return $this->evaluate($this->buttonLabel);
     }
+
+    public function getPresets(): array|null
+    {
+        return app('curator')->getCurationPresets();
+    }
 }

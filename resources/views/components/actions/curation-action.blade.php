@@ -2,4 +2,5 @@
     :state-path="$statePath"
     :modal-id="$modalId"
     :record="$record"
+    :presets="$presets"
 />

@@ -14,17 +14,21 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CuratorCuration extends Component
 {
-    public $data;
+    public string $statePath;
 
-    public $statePath;
+    public string $modalId;
 
-    public $modalId;
+    public Media $record;
 
-    public $record;
+    public array $presets;
 
     public function saveCuration($data = null): void
     {
         ray($data);
+        // process image
+        // save image to directory base on record
+        // return curation data
+        $this->dispatchBrowserEvent('add-curation', ['curation' => $data, 'statePath' => $this->statePath]);
     }
 
     public function render(): View

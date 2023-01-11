@@ -58,7 +58,8 @@ class MediaResource extends Resource
                                     ->schema([
                                         Forms\Components\Repeater::make('curations')
                                             ->schema([
-                                                Forms\Components\TextInput::make('name'),
+                                                Forms\Components\TextInput::make('name')
+                                                    ->disabled(),
                                                 CuratorEditor::make('curation')
                                                     ->disableLabel()
                                                     ->buttonLabel(__('curator::forms.curations.button_label')),

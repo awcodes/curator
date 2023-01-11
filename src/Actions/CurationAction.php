@@ -27,6 +27,7 @@ class CurationAction extends Action
                 'statePath' => $component->getStatePath(),
                 'modalId' => $component->getLivewire()->id.'-form-component-action',
                 'record' => $component->getRecord(),
+                'presets' => $component->getPresets(),
             ]);
         });
     }

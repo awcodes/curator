@@ -15,8 +15,8 @@
 
     <div
         x-data="{ state: $wire.entangle('{{ $statePath }}') }"
-        x-on:insert-media.window="$event.detail.statePath == '{{ $statePath }}' ? state = $event.detail.media.id : null"
-        class="w-full curator-media-picker"
+        x-on:add-curation.window="$event.detail.statePath == '{{ $statePath }}' ? state = $event.detail.curation : null"
+        class="w-full curator-curation-form-component"
     >
 
         @if (! $currentItem)
