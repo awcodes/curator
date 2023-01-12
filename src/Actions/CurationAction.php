@@ -3,7 +3,9 @@
 namespace Awcodes\Curator\Actions;
 
 use Awcodes\Curator\Components\Forms\CuratorEditor;
+use Awcodes\Curator\Models\Media;
 use Filament\Forms\Components\Actions\Action;
+use Livewire\Component;
 
 class CurationAction extends Action
 {
@@ -20,12 +22,15 @@ class CurationAction extends Action
 
         $this->modalActions([]);
 
-        $this->modalHeading(__('curator::views.curation.heading'));
+        $this->modalHeading(static function (CuratorEditor $component, Component $livewire) {
+            return __('curator::views.curation.heading') . ' ' . $livewire->getRecord()->name;
+        });
 
-        $this->modalContent(static function (CuratorEditor $component) {
+        $this->modalContent(static function (CuratorEditor $component, Component $livewire) {
             return view('curator::components.actions.curation-action', [
                 'statePath' => $component->getStatePath(),
-                'modalId' => $component->getLivewire()->id.'-form-component-action',
+                'modalId' => $livewire->id.'-form-component-action',
+                'media' => $livewire->getRecord(),
                 'record' => $component->getRecord(),
                 'presets' => $component->getPresets(),
             ]);

@@ -282,6 +282,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 - [Adam Weston](https://github.com/awcodes)
 - [The PHP League](https://glide.thephpleague.com/) for the awesome Glide package.
+- [Cropperjs](https://github.com/fengyuanchen/cropperjs) for their amazing Javascript package.
 - [All Contributors](../../contributors)
 
 ## License

@@ -57,9 +57,10 @@ class MediaResource extends Resource
                                     ->visible(fn($record) => Str::of($record->type)->contains('image'))
                                     ->schema([
                                         Forms\Components\Repeater::make('curations')
+                                            ->relationship('curations')
+                                            ->itemLabel(fn ($state): ?string => $state['key'] ?? null)
+                                            ->collapsible()
                                             ->schema([
-                                                Forms\Components\TextInput::make('name')
-                                                    ->disabled(),
                                                 CuratorEditor::make('curation')
                                                     ->disableLabel()
                                                     ->buttonLabel(__('curator::forms.curations.button_label')),
@@ -185,6 +186,7 @@ class MediaResource extends Resource
             Forms\Components\TextInput::make('name')
                 ->label(__('curator::forms.fields.name'))
                 ->hiddenOn('create')
+                ->required()
                 ->dehydrateStateUsing(function ($component, $state) {
                     $slugged = Str::slug($state);
                     $component->state($slugged);

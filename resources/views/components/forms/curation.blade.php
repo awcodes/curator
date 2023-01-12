@@ -1,5 +1,5 @@
 @php
-    $currentItem = $getCurrentItem();
+    $record = $getRecord();
     $statePath = $getStatePath();
 @endphp
 
@@ -18,8 +18,7 @@
         x-on:add-curation.window="$event.detail.statePath == '{{ $statePath }}' ? state = $event.detail.curation : null"
         class="w-full curator-curation-form-component"
     >
-
-        @if (! $currentItem)
+        @if (! $record)
             <x-filament::button
                 type="button"
                 color="{{ $getColor() }}"
@@ -30,76 +29,34 @@
                 {{ $getButtonLabel() }}
             </x-filament::button>
         @else
-            <div class="relative block w-full h-64 overflow-hidden transition duration-75 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white flex justify-center checkered">
-
-                @if (str($currentItem['type'])->contains('image'))
+            <div class="transition duration-75 overflow-hidden border border-gray-300 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white grid md:grid-cols-2 gap-3">
+                <div class="relative block w-full h-40 checkered p-4">
                     <img
-                        src="{{ $currentItem['url'] }}"
-                        alt="{{ $currentItem['alt'] }}"
-                         @class([
-                            'h-full',
-                            'object-fit' => $isConstrained(),
-                            'object-cover w-full' => ! $isConstrained(),
-                        ])
+                        src="{{ $record['url'] }}"
+                        width="{{ $record['width'] }}"
+                        height="{{ $record['height'] }}"
+                        alt=""
+                        class="w-full h-full object-contain"
                     />
-                @else
-                    <x-curator::document-image
-                        label="{{ $currentItem['filename'] }}"
-                        icon-size="xl"
-                    />
-                @endif
-
-                <div class="absolute top-0 right-0 flex bg-gray-900 divide-x divide-gray-700 rounded-bl-lg shadow-md">
-                    <a
-                        href="{{ $currentItem['url'] }}"
-                        target="_blank"
-                        rel="noopener nofollow"
-                        class="flex items-center justify-center flex-none w-10 h-10 transition text-gray-600 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.view') }}"
-                    >
-                        @svg('heroicon-s-eye', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.view') }}</span>
-                    </a>
-                    <button
-                        type="button"
-                        wire:click="mountFormComponentAction('{{ $statePath }}', 'curator_download')"
-                        class="flex items-center justify-center flex-none w-10 h-10 transition text-primary-600 hover:text-primary-500 dark:text-primary-500 dark:hover:text-primary-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.download') }}"
-                    >
-                        @svg('heroicon-s-download', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.download') }}</span>
-                    </button>
-                    @if (! $isDisabled())
-                    <a
-                        href="{{ \Awcodes\Curator\Resources\MediaResource::getUrl('edit', $currentItem['id']) }}"
-                        target="_blank"
-                        rel="noopener nofollow"
-                        class="flex items-center justify-center flex-none w-10 h-10 transition text-success-600 hover:text-success-500 dark:text-success-500 dark:hover:text-success-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.edit') }}"
-                    >
-                        @svg('heroicon-s-pencil', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.edit') }}</span>
-                    </a>
-                    <button
-                        type="button"
-                        x-on:click="state = null"
-                        class="flex items-center justify-center flex-none w-10 h-10 transition text-danger-600 hover:text-danger-500 dark:text-danger-500 dark:hover:text-danger-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.remove') }}"
-                    >
-                        @svg('heroicon-s-minus-circle', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.remove') }}</span>
-                    </button>
-                    @endif
                 </div>
-                <div
-                    class="absolute inset-x-0 bottom-0 flex items-center justify-between px-2 pt-10 pb-1 text-xs text-white bg-gradient-to-t from-black/80 to-transparent gap-3"
-                >
-                    <p class="truncate">{{ $currentItem['name'] }}.{{ $currentItem['ext'] }}</p>
-                    <p class="flex-shrink-0">{{ $currentItem['size_for_humans'] }}</p>
+                <div>
+                    <dl class="px-3 pb-3 md:py-3">
+                        <div class="flex gap-2">
+                            <dt class="font-bold">Key: </dt>
+                            <dd>{{ $record['key'] }}</dd>
+                        </div>
+                        <div class="flex gap-2">
+                            <dt class="font-bold">Width: </dt>
+                            <dd>{{ $record['width'] }}</dd>
+                        </div>
+                        <div class="flex gap-2">
+                            <dt class="font-bold">Height: </dt>
+                            <dd>{{ $record['height'] }}</dd>
+                        </div>
+                    </dl>
                 </div>
             </div>
         @endif
-
     </div>
 
 </x-forms::field-wrapper>

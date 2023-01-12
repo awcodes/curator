@@ -21,7 +21,7 @@ class CuratorServiceProvider extends PluginServiceProvider
             ->hasRoute('web')
             ->hasViews()
             ->hasTranslations()
-            ->hasMigration('create_media_table')
+            ->hasMigrations(['create_media_table', 'create_curations_table'])
             ->hasCommands([
                 UpgradeCommand::class
             ])

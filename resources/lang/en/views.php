@@ -42,6 +42,6 @@ return [
         'remove' => 'Remove',
     ],
     'curation' => [
-        'heading' => 'Curation'
+        'heading' => 'Curating'
     ],
 ];

@@ -3,13 +3,12 @@
 namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
-use Awcodes\Curator\Facades\Curator;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
-class Media extends Model
+class Curation extends Model
 {
     use HasPackageFactory;
 
@@ -23,21 +22,12 @@ class Media extends Model
 
     protected $appends = [
         'url',
-        'thumbnail_url',
-        'resizable',
     ];
 
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::disk($this->disk)->url($this->directory.'/'.$this->name.'.'.$this->ext),
-        );
-    }
-
-    protected function thumbnailUrl(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => '/curator/'.$this->path.'?w=200&h=200&fit=crop&fm=webp',
+            get: fn () => Storage::disk($this->disk)->url($this->path),
         );
     }
 
@@ -45,13 +35,6 @@ class Media extends Model
     {
         return Attribute::make(
             get: fn () => Storage::disk($this->disk)->path($this->directory.'/'.$this->name.'.'.$this->ext),
-        );
-    }
-
-    protected function resizable(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => Curator::isResizable($this->ext),
         );
     }
 
@@ -73,8 +56,8 @@ class Media extends Model
         return round($size, $precision).' '.$units[$i];
     }
 
-    public function curations(): HasMany
+    public function media(): BelongsTo
     {
-        return $this->hasMany(Curation::class);
+        return $this->belongsTo(Media::class);
     }
 }

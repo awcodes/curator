@@ -10,6 +10,11 @@ document.addEventListener("alpine:init", () => {
         preset: 'custom',
         flippedHorizontally: false,
         flippedVertically: false,
+        format: 'jpg',
+        quality:  60,
+        key: null,
+        finalWidth: 0,
+        finalHeight: 0,
         cropBoxData: {
             left: 0,
             top: 0,
@@ -26,11 +31,11 @@ document.addEventListener("alpine:init", () => {
             scaleY: 1,
         },
         init() {
+            this.destroy();
+
             this.cropper = new Cropper(this.$refs.image, {
                 background: false,
             });
-
-            console.log(this.presets);
 
             this.$watch('preset', ($value) => {
                 if ($value === 'custom') {
@@ -53,10 +58,14 @@ document.addEventListener("alpine:init", () => {
             this.cropper = null;
         },
         setData() {
+            this.finalWidth = this.data.width;
+            this.finalHeight = this.data.height;
             this.data = this.cropper.getData(true);
             this.cropBoxData = this.cropper.getCropBoxData();
         },
         updateData() {
+            this.finalWidth = this.data.width;
+            this.finalHeight = this.data.height;
             this.data = this.cropper.getData(true);
             this.cropBoxData = this.cropper.getCropBoxData();
         },
@@ -88,6 +97,17 @@ document.addEventListener("alpine:init", () => {
         },
         saveCuration() {
             let data = this.cropper.getData(true);
+            data = {
+                ...data,
+                containerData: this.cropper.getContainerData(),
+                imageData: this.cropper.getImageData(),
+                canvasData: this.cropper.getCanvasData(),
+                croppedCanvasData: this.cropper.getCroppedCanvas(),
+                format: this.format,
+                quality: this.quality,
+                preset: this.preset,
+                key: this.key ?? this.preset,
+            }
             this.$wire.saveCuration(data);
         },
     }));

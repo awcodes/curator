@@ -3,6 +3,7 @@
 namespace Awcodes\Curator\Components\Forms;
 
 use Awcodes\Curator\Actions\CurationAction;
+use Awcodes\Curator\Models\Curation;
 use Awcodes\Curator\Models\Media;
 use Closure;
 use Exception;
@@ -37,6 +38,11 @@ class CuratorEditor extends Field
         $this->color = 'primary';
         $this->isOutlined = true;
 
+        $this->afterStateUpdated(function ($component, $state, $livewire) {
+            ray($livewire->getRecord());
+            $component->state($state);
+        });
+
         $this->registerActions([
             CurationAction::make(),
         ]);
@@ -51,7 +57,8 @@ class CuratorEditor extends Field
 
     public function getCurrentItem(): Model|Collection|null
     {
-        return Media::where('id', $this->getState())->first();
+        ray($this->getState());
+        return Curation::where('id', $this->getState())->first();
     }
 
     public function getButtonLabel(): string|Htmlable|null
