@@ -5,6 +5,7 @@ namespace Awcodes\Curator\View\Components;
 use Awcodes\Curator\Models\Media;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Glider extends Component
@@ -15,6 +16,8 @@ class Glider extends Component
         public int|Media $media,
         public string|null $glide = null,
         public string $loading = 'lazy',
+        public array|null $srcset = null,
+        public string|null $sizes = null,
         public string|null $background = null,
         public string|null $blur = null,
         public string|null $border = null,
@@ -47,9 +50,10 @@ class Glider extends Component
         }
     }
 
-    public function buildGlideSource(): string
+    public function buildGlideSource(array $overrides = []): string
     {
-        $params = array_filter([
+        $params = array_filter(array_merge(
+            [
             'bg' => $this->background,
             'blur' => $this->blur,
             'border' => $this->border,
@@ -76,9 +80,25 @@ class Glider extends Component
             'markpad' => $this->watermarkPadding,
             'markpos' => $this->watermarkPosition,
             'markalpha' => $this->watermarkAlpha,
-        ]);
+        ],
+            $overrides
+        ));
 
-        return '/curator/' . $this->media->path . '?' . http_build_query($params);
+        return '/curator/' . $this->media->path . ($params ? '?' . http_build_query($params) : null);
+    }
+
+    public function buildSrcSet(): ?string
+    {
+        $srcset = '';
+        if ($this->srcset) {
+            foreach ($this->srcset as $s) {
+                $width = preg_replace("/\D/", '', $s);
+                $srcset .= $this->buildGlideSource(['w' => $width, 'h' => floor($width * ($this->media->height / $this->media->width))]) . ' ' . $s . ', ';
+            }
+            return Str::of($srcset)->rtrim(', ');
+        }
+
+        return null;
     }
 
     public function render(): View|Closure|string
@@ -93,6 +113,7 @@ class Glider extends Component
             'media' => $this->media,
             'source' => $this->source,
             'loading' => $this->loading,
+            'sourceset' => $this->buildSrcSet(),
         ]);
     }
 }

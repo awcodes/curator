@@ -190,6 +190,9 @@ See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-refer
 - media: id (int) or (Media) model instance (***required***)
 - loading: defaults to 'lazy'
 - glide: this can be used to pass in a glide query string if you do not want to use individual attributes
+- srcset: this will output the necessary srcset with glide generated images. 
+  Must be an array of srcset widths and requires the 'sizes' attribute to 
+  also be set.
 
 ```html
 <div class="aspect-video w-64">
@@ -198,6 +201,8 @@ See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-refer
         :media="1" 
         loading=""
         glide=""
+        :srcset="['1024w','640w']"
+        sizes="(max-width: 1200px) 100vw, 1024px"
         background=""
         blur=""
         border=""

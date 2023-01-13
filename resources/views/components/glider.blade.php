@@ -3,7 +3,13 @@
          alt="{{ $media->alt }}"
          width="{{ $media->width }}"
          height="{{ $media->height }}"
-         loading="{{ $loading }}"
+         @if ($loading)
+             loading="{{ $loading }}"
+         @endif
+         @if ($sourceset)
+            srcset="{{ $sourceset }}"
+            sizes="{{ $sizes }}"
+         @endif
          {{ $attributes }}
     />
 @else
