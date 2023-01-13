@@ -18,9 +18,16 @@ class ListMedia extends ListRecords
         return array_merge(
             [
                 Action::make('toggle-table-view')
-                    ->disableLabel()
                     ->color('secondary')
-                    ->icon(function () {
+                    ->label(function (): string {
+                        $condition = app('curator')->shouldTableHaveGridLayout();
+                        if (Session::has('tableLayout')) {
+                            $condition = Session::get('tableLayout');
+                        }
+
+                        return $condition ? __('curator::tables.actions.toggle_table_list') : __('curator::tables.actions.toggle_table_grid');
+                    })
+                    ->icon(function (): string {
                         $condition = app('curator')->shouldTableHaveGridLayout();
                         if (Session::has('tableLayout')) {
                             $condition = Session::get('tableLayout');

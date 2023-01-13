@@ -115,9 +115,6 @@ class MediaResource extends Resource
                     ? static::getDefaultGridTableColumns()
                     : static::getDefaultTableColumns(),
             ))
-            ->filters([
-
-            ])
             ->actions([
                 app('curator')->shouldTableHaveIconActions() ? Tables\Actions\EditAction::make()->iconButton() : Tables\Actions\EditAction::make(),
                 app('curator')->shouldTableHaveIconActions() ? Tables\Actions\DeleteAction::make()->iconButton() : Tables\Actions\DeleteAction::make(),
@@ -159,6 +156,10 @@ class MediaResource extends Resource
             Tables\Columns\TextColumn::make('directory')
                 ->label(__('curator::tables.columns.directory'))
                 ->sortable(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->label(__('curator::tables.columns.created_at'))
+                ->date('Y-m-d')
+                ->sortable(),
         ];
     }
 
@@ -177,6 +178,10 @@ class MediaResource extends Resource
                 ->sortable(),
             Tables\Columns\TextColumn::make('directory')
                 ->label(__('curator::tables.columns.directory'))
+                ->extraAttributes(['class' => 'hidden'])
+                ->sortable(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->label(__('curator::tables.columns.created_at'))
                 ->extraAttributes(['class' => 'hidden'])
                 ->sortable(),
         ];
