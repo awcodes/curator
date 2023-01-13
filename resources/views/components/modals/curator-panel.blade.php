@@ -94,8 +94,7 @@
         </div> <!--loading -->
 
         <div class="flex-1 h-full overflow-auto p-4">
-
-            <ul class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 2xl:grid-cols-8">
+            <ul class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10">
 
                 <template x-for="file in files">
 
@@ -167,7 +166,7 @@
             </ul>
         </div> <!-- gallery -->
 
-        <div class="w-full lg:h-full lg:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top lg:shadow-none" style="z-index: 1;">
+        <div class="w-full lg:h-full lg:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top lg:shadow-none z-[1]">
 
             <label class="border-b border-gray-300 dark:border-gray-800 relative">
                 <span class="sr-only">{{ __('curator::views.panel.search_label') }}</span>

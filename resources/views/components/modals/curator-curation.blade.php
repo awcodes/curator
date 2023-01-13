@@ -10,7 +10,7 @@
 
     <div class="flex-1 relative flex flex-col lg:flex-row overflow-hidden">
 
-        <div class="flex-1 h-full overflow-auto p-4">
+        <div class="flex-1 lg:h-full overflow-auto p-4">
             <div class="h-full">
                 <img
                     x-ref="image"
@@ -22,18 +22,18 @@
             </div>
         </div>
 
-        <div class="w-full lg:h-full lg:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top lg:shadow-none z-[1]">
+        <div class="w-full h-96 lg:h-full lg:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top lg:shadow-none z-[1]">
             <div class="flex-1 overflow-hidden">
                 <div class="flex flex-col h-full overflow-y-auto">
                     <h2 class="font-bold py-2 px-4 mb-0">
-                        Adjustments
+                        {{ __('views.curation.adjustments') }}
                     </h2>
 
                     <div class="flex-1 overflow-auto px-4 pb-4">
                         <div class="space-y-3">
                             <div x-show="presets" x-cloak>
                                 <x-curator::curation-select prefix="Preset" name="preset" x-model="preset">
-                                    <option value="custom">Custom</option>
+                                    <option value="custom">{{ __('views.curation.custom') }}</option>
                                     <template x-for="preset in presets">
                                         <option x-bind:value="preset.key" x-bind:key="preset.key" x-text="preset.name"></option>
                                     </template>
@@ -41,10 +41,10 @@
                             </div>
                             <div>
                                 <label class="flex items-center w-full border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm bg-gray-400 dark:bg-gray-800 text-sm" x-bind:class="{'border-danger-600 ring-danger-600 dark:border-danger-400 dark:ring-danger-400' : key === null}">
-                                    <span class="w-20 flex-shrink-0 self-stretch flex items-center justify-center px-2">Key</span>
+                                    <span class="w-20 flex-shrink-0 self-stretch flex items-center justify-center px-2">{{ __('views.curation.key') }}</span>
                                     <input type="text" name="key" x-model="key" class="text-sm block w-full transition duration-75 border-none focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus:border-primary-500 !rounded-r-lg" />
                                 </label>
-                                <p class="text-xs mt-1 pl-2">This is the reference used to retrieve your curation for display.</p>
+                                <p class="text-xs mt-1 pl-2">{{ __('views.curation.key_helper') }}</p>
                             </div>
                             <x-curator::curation-select prefix="Format" name="format" x-model="format">
                                 <option value="jpg">jpg</option>
@@ -69,46 +69,46 @@
                         </div>
 
                         <div class="flex items-center w-full mt-3">
-                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-l-lg !rounded-r-none flex-1" x-on:click="cropper.zoom(0.1)" x-tooltip.raw="Zoom In">
-                                <span class="sr-only">Zoom in</span>
+                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-l-lg !rounded-r-none flex-1" x-on:click="cropper.zoom(0.1)" x-tooltip.raw="{{ __('views.curation.zoom_in') }}">
+                                <span class="sr-only">{{ __('views.curation.zoom_in') }}</span>
                                 @svg('heroicon-o-zoom-in', 'w-4 h-4')
                             </x-filament::button>
-                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-r-lg !rounded-l-none flex-1" x-on:click="cropper.zoom(-0.1)" x-tooltip.raw="Zoom Out">
-                                <span class="sr-only">Zoom out</span>
+                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-r-lg !rounded-l-none flex-1" x-on:click="cropper.zoom(-0.1)" x-tooltip.raw="{{ __('views.curation.zoom_out') }}">
+                                <span class="sr-only">{{ __('views.curation.zoom_out') }}</span>
                                 @svg('heroicon-o-zoom-out', 'w-4 h-4')
                             </x-filament::button>
                         </div>
 
                         <div class="flex items-center w-full mt-3">
-                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-l-lg !rounded-r-none flex-1" x-on:click="flipHorizontally" x-tooltip.raw="Flip horizontally">
-                                <span class="sr-only">Flip horizontally</span>
+                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-l-lg !rounded-r-none flex-1" x-on:click="flipHorizontally" x-tooltip.raw="{{ __('views.curation.flip_horizontally') }}">
+                                <span class="sr-only">{{ __('views.curation.flip_horizontally') }}</span>
                                 <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 7l5 5l-5 5V7m18 0l-5 5l5 5V7m-9 13v2m0-8v2m0-8v2m0-8v2"/></svg>
                             </x-filament::button>
-                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-r-lg !rounded-l-none flex-1" x-on:click="flipVertically" x-tooltip.raw="Flip vertically">
-                                <span class="sr-only">Flip vertically</span>
+                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-r-lg !rounded-l-none flex-1" x-on:click="flipVertically" x-tooltip.raw="{{ __('views.curation.flip_vertically') }}">
+                                <span class="sr-only">{{ __('views.curation.flip_vertically') }}</span>
                                 <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m17 3l-5 5l-5-5h10m0 18l-5-5l-5 5h10M4 12H2m8 0H8m8 0h-2m8 0h-2"/></svg>
                             </x-filament::button>
                         </div>
 
                         <div class="flex items-center w-full mt-3">
-                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-l-lg !rounded-r-none flex-1" x-on:click="cropper.setDragMode('move')" x-tooltip.raw="Drag Mode">
-                                <span class="sr-only">Drag Mode</span>
+                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-l-lg !rounded-r-none flex-1" x-on:click="cropper.setDragMode('move')" x-tooltip.raw="{{ __('views.curation.drag_mode') }}">
+                                <span class="sr-only">{{ __('views.curation.drag_mode') }}</span>
                                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M13 6v5h5V7.75L22.25 12L18 16.25V13h-5v5h3.25L12 22.25L7.75 18H11v-5H6v3.25L1.75 12L6 7.75V11h5V6H7.75L12 1.75L16.25 6H13Z"/></svg>
                             </x-filament::button>
-                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-r-lg !rounded-l-none flex-1" x-on:click="cropper.setDragMode('crop')" x-tooltip.raw="Crop Mode">
-                                <span class="sr-only">Crop Mode</span>
+                            <x-filament::button type="button" size="sm" color="secondary" class="!rounded-r-lg !rounded-l-none flex-1" x-on:click="cropper.setDragMode('crop')" x-tooltip.raw="{{ __('views.curation.crop_mode') }}">
+                                <span class="sr-only">{{ __('views.curation.crop_mode') }}</span>
                                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M17 23v-4H7q-.825 0-1.412-.587Q5 17.825 5 17V7H1V5h4V1h2v16h16v2h-4v4Zm0-8V7H9V5h8q.825 0 1.413.588Q19 6.175 19 7v8Z"/></svg>
                             </x-filament::button>
                         </div>
 
                         <div class="flex items-center w-full mt-3">
-                            <x-filament::button type="button" size="sm" color="secondary" class="flex-1" x-on:click="cropper.reset()">Reset</x-filament::button>
+                            <x-filament::button type="button" size="sm" color="secondary" class="flex-1" x-on:click="cropper.reset()">{{ __('views.curation.reset') }}</x-filament::button>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-start gap-3 py-3 px-4 border-t border-gray-300 bg-gray-200 dark:border-gray-800 dark:bg-black/10">
                         <x-filament::button type="button" size="sm" color="success" x-on:click="saveCuration()">
-                            Save Curation
+                            {{ __('views.curation.save_curation') }}
                         </x-filament::button>
                     </div>
                 </div>

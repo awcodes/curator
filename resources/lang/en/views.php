@@ -42,6 +42,18 @@ return [
         'remove' => 'Remove',
     ],
     'curation' => [
-        'heading' => 'Curating'
+        'heading' => 'Curating',
+        'adjustments' => 'Adjustments',
+        'custom' => 'Custom',
+        'key' => 'Key',
+        'key_helper' => 'This is the reference used to retrieve your curation for display.',
+        'zoom_in' => 'Zoom In',
+        'zoom_out' => 'Zoom Out',
+        'flip_horizontally' => 'Flip Horizontally',
+        'flip_vertically' => 'Flip Vertically',
+        'drag_mode' => 'Drag Mode',
+        'crop_mode' => 'Crop Mode',
+        'reset' => 'Reset',
+        'save_curation' => 'Save Curation',
     ],
 ];
