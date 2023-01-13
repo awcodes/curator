@@ -39,8 +39,11 @@
                                     </template>
                                 </x-curator::curation-select>
                             </div>
-                            <div x-show="preset === 'custom'" x-cloak>
-                                <x-curator::curation-input type="text" prefix="Key" name="key" x-model="key"  />
+                            <div>
+                                <label class="flex items-center w-full border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm bg-gray-400 dark:bg-gray-800 text-sm" x-bind:class="{'border-danger-600 ring-danger-600 dark:border-danger-400 dark:ring-danger-400' : key === null}">
+                                    <span class="w-20 flex-shrink-0 self-stretch flex items-center justify-center px-2">Key</span>
+                                    <input type="text" name="key" x-model="key" class="text-sm block w-full transition duration-75 border-none focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus:border-primary-500 !rounded-r-lg" />
+                                </label>
                                 <p class="text-xs mt-1 pl-2">This is the reference used to retrieve your curation for display.</p>
                             </div>
                             <x-curator::curation-select prefix="Format" name="format" x-model="format">

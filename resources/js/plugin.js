@@ -40,6 +40,7 @@ document.addEventListener("alpine:init", () => {
             this.$watch('preset', ($value) => {
                 if ($value === 'custom') {
                     this.cropper.reset()
+                    this.key = null;
                 } else {
                     let containerData = this.cropper.getContainerData();
                     let cropBoxData = this.cropper.getCropBoxData();
@@ -48,7 +49,8 @@ document.addEventListener("alpine:init", () => {
                     let height = preset.height;
                     let left = Math.round((containerData.width - width) / 2);
                     let top = Math.round((containerData.height - height) / 2);
-                    this.cropper.setCropBoxData({...cropBoxData, left, top, width, height})
+                    this.cropper.setCropBoxData({...cropBoxData, left, top, width, height});
+                    this.key = preset.key;
                 }
             })
         },

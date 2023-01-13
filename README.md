@@ -187,7 +187,7 @@ See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-refer
 
 **Special attributes**
 
-- media: id (int) or (Media) model instance (***required***)
+- media: id (int) or model (Media) instance ***required***
 - loading: defaults to 'lazy'
 - glide: this can be used to pass in a glide query string if you do not want to use individual attributes
 - srcset: this will output the necessary srcset with glide generated images. 
@@ -231,6 +231,19 @@ See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-refer
         watermark-alpha=""
     />
 </div>
+```
+
+### Curation Blade Component
+
+To make it as easy as possible to output your curations, Curator comes with an
+`<x-curator-curation>` blade component.
+
+**Special attributes**
+
+- media: id (int) or model (Media) instance ***required***
+
+```html
+<x-curator-curation :media="10" curation="thumbnail" loading="lazy" />
 ```
 
 ### Custom Model and Resources
