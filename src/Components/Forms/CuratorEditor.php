@@ -50,12 +50,6 @@ class CuratorEditor extends Field
         return $this;
     }
 
-    public function getCurrentItem(): Model|Collection|null
-    {
-        $state = $this->getState();
-        return $state ? Curation::where('id', $state)->first() : $this->getRecord();
-    }
-
     public function getButtonLabel(): string|Htmlable|null
     {
         return $this->evaluate($this->buttonLabel);
