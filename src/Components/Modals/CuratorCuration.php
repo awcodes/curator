@@ -26,20 +26,21 @@ class CuratorCuration extends Component
     {
         $image = Image::make(Storage::disk($this->media->disk)->path($this->media->path));
 
-        $aspectWidth = floor($data['canvasData']['width'] / $data['canvasData']['naturalWidth'] * $data['width']);
-        $aspectHeight = floor($data['canvasData']['height'] / $data['canvasData']['naturalHeight'] * $data['height']);
+        $aspectWidth = (int) ($data['canvasData']['width'] / $data['canvasData']['naturalWidth']) * $data['width'];
+        $aspectHeight = (int) ($data['canvasData']['height'] / $data['canvasData']['naturalHeight']) * $data['height'];
 
         $image->rotate($data['rotate'])
-            ->crop(round($data['width']), round($data['height']), round($data['x']), round($data['y']))
+            ->crop($data['width'], $data['height'], $data['x'], $data['y'])
             ->resize($aspectWidth, $aspectHeight)
-            ->encode($data['format'], $data['quality']);
+            ->encode($data['format'] ?? 'jpg', $data['quality'] ?? 60);
 
         // save image to directory base on media
         $curationPath = $this->media->directory . '/' . $this->media->name . '/' . $data['key'] . '.' . $image->extension;
 
         Storage::disk($this->media->disk)->put($curationPath, $image->stream());
 
-        $curation = [
+        $curation = Curation::create([
+            'media_id' => $this->media->id,
             'key' => $data['key'] ?? $aspectWidth . 'x' . $aspectHeight,
             'disk' => $this->media->disk,
             'directory' => $this->media->name,
@@ -50,24 +51,7 @@ class CuratorCuration extends Component
             'size' => $image->filesize(),
             'type' => $image->mime(),
             'ext' => $image->extension,
-        ];
-
-        $this->media->curations()->create($curation);
-
-        // return curation data
-//        $curation = Curation::create([
-//            'media_id' => $this->media->id,
-//            'key' => $data['key'] ?? $aspectWidth . 'x' . $aspectHeight,
-//            'disk' => $this->media->disk,
-//            'directory' => $this->media->name,
-//            'name' => $data['key'] . '.' . $image->extension,
-//            'path' => $curationPath,
-//            'width' => $aspectWidth,
-//            'height' => $aspectHeight,
-//            'size' => $image->filesize(),
-//            'type' => $image->mime(),
-//            'ext' => $image->extension,
-//        ]);
+        ]);
 
         $this->dispatchBrowserEvent('add-curation', ['curation' => $curation, 'statePath' => $this->statePath]);
     }

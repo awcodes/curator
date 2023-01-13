@@ -49,6 +49,7 @@ class CuratorServiceProvider extends PluginServiceProvider
         Livewire::component('curator-curation', Components\Modals\CuratorCuration::class);
 
         Blade::component('curator-glider', View\Components\Glider::class);
+        Blade::component('curator-curation', View\Components\Curation::class);
     }
 
     protected function getResources(): array

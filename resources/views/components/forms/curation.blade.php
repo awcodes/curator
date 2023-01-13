@@ -1,5 +1,5 @@
 @php
-    $record = $getRecord();
+    $currentItem = $getCurrentItem();
     $statePath = $getStatePath();
 @endphp
 
@@ -15,10 +15,10 @@
 
     <div
         x-data="{ state: $wire.entangle('{{ $statePath }}') }"
-        x-on:add-curation.window="$event.detail.statePath == '{{ $statePath }}' ? state = $event.detail.curation : null"
+        x-on:add-curation.window="$event.detail.statePath == '{{ $statePath }}' ? state = $event.detail.curation.id : null"
         class="w-full curator-curation-form-component"
     >
-        @if (! $record)
+        @if (! $currentItem)
             <x-filament::button
                 type="button"
                 color="{{ $getColor() }}"
@@ -32,9 +32,9 @@
             <div class="transition duration-75 overflow-hidden border border-gray-300 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white grid md:grid-cols-2 gap-3">
                 <div class="relative block w-full h-40 checkered p-4">
                     <img
-                        src="{{ $record['url'] }}"
-                        width="{{ $record['width'] }}"
-                        height="{{ $record['height'] }}"
+                        src="{{ $currentItem['url'] }}"
+                        width="{{ $currentItem['width'] }}"
+                        height="{{ $currentItem['height'] }}"
                         alt=""
                         class="w-full h-full object-contain"
                     />
@@ -43,15 +43,15 @@
                     <dl class="px-3 pb-3 md:py-3">
                         <div class="flex gap-2">
                             <dt class="font-bold">Key: </dt>
-                            <dd>{{ $record['key'] }}</dd>
+                            <dd>{{ $currentItem['key'] }}</dd>
                         </div>
                         <div class="flex gap-2">
                             <dt class="font-bold">Width: </dt>
-                            <dd>{{ $record['width'] }}</dd>
+                            <dd>{{ $currentItem['width'] }}</dd>
                         </div>
                         <div class="flex gap-2">
                             <dt class="font-bold">Height: </dt>
-                            <dd>{{ $record['height'] }}</dd>
+                            <dd>{{ $currentItem['height'] }}</dd>
                         </div>
                     </dl>
                 </div>

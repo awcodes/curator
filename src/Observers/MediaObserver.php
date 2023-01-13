@@ -24,9 +24,9 @@ class MediaObserver
                     $media->{$k} = $v;
                 }
             }
-
-            $media->__unset('file');
         }
+
+        $media->__unset('file');
     }
 
     /**
@@ -50,7 +50,6 @@ class MediaObserver
     {
         // Replace image
         if ($this->hasMediaUpload($media)) {
-
             if (Storage::disk($media->disk)->exists($media->directory.'/'.$media->getOriginal()['name'].'.'.$media->getOriginal()['ext'])) {
                 Storage::disk($media->disk)->delete($media->directory.'/'.$media->getOriginal()['name'].'.'.$media->getOriginal()['ext']);
             }
@@ -63,7 +62,6 @@ class MediaObserver
 
             $media->name = $media->getOriginal()['name'];
             $media->path = $media->directory.'/'.$media->getOriginal()['name'].'.'.$media->ext;
-            $media->__unset('file');
         }
 
         // Rename file name
@@ -74,6 +72,8 @@ class MediaObserver
             Storage::disk($media->disk)->move($media->path, $media->directory.'/'.$media->name.'.'.$media->ext);
             $media->path = $media->directory.'/'.$media->name.'.'.$media->ext;
         }
+
+        $media->__unset('file');
     }
 
     /**

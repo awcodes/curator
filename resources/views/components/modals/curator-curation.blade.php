@@ -41,13 +41,7 @@
                             </div>
                             <div x-show="preset === 'custom'" x-cloak>
                                 <x-curator::curation-input type="text" prefix="Key" name="key" x-model="key"  />
-                                <div x-bind:class="{
-                                    'border-gray-300 dark:border-gray-600': ! (@js($statePath) in $wire.__instance.serverMemo.errors),
-                                    'border-danger-600 ring-danger-600 dark:border-danger-400 dark:ring-danger-400': (@js($statePath) in $wire.__instance.serverMemo.errors),
-                                }"></div>
-                                @error('required_key')
-                                    {{ $message }}
-                                @enderror
+                                <p class="text-xs mt-1 pl-2">This is the reference used to retrieve your curation for display.</p>
                             </div>
                             <x-curator::curation-select prefix="Format" name="format" x-model="format">
                                 <option value="jpg">jpg</option>

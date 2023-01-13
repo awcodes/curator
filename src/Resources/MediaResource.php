@@ -60,10 +60,12 @@ class MediaResource extends Resource
                                             ->relationship('curations')
                                             ->itemLabel(fn ($state): ?string => $state['key'] ?? null)
                                             ->collapsible()
+                                            ->dehydrated(false)
                                             ->schema([
                                                 CuratorEditor::make('curation')
                                                     ->disableLabel()
-                                                    ->buttonLabel(__('curator::forms.curations.button_label')),
+                                                    ->buttonLabel(__('curator::forms.curations.button_label'))
+                                                    ->dehydrated(false),
                                             ])
                                     ]),
                                 Forms\Components\Tabs\Tab::make(__('curator::forms.sections.upload_new'))
@@ -211,7 +213,6 @@ class MediaResource extends Resource
     {
         return Uploader::make('file')
             ->disableLabel()
-            ->required()
             ->preserveFilenames(app('curator')->shouldPreserveFilenames())
             ->maxWidth(app('curator')->getMaxWidth())
             ->minSize(app('curator')->getMinSize())

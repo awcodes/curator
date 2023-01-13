@@ -38,11 +38,6 @@ class CuratorEditor extends Field
         $this->color = 'primary';
         $this->isOutlined = true;
 
-        $this->afterStateUpdated(function ($component, $state, $livewire) {
-            ray($livewire->getRecord());
-            $component->state($state);
-        });
-
         $this->registerActions([
             CurationAction::make(),
         ]);
@@ -57,8 +52,8 @@ class CuratorEditor extends Field
 
     public function getCurrentItem(): Model|Collection|null
     {
-        ray($this->getState());
-        return Curation::where('id', $this->getState())->first();
+        $state = $this->getState();
+        return $state ? Curation::where('id', $state)->first() : $this->getRecord();
     }
 
     public function getButtonLabel(): string|Htmlable|null
