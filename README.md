@@ -166,6 +166,18 @@ CuratorColumn::make('featured_image')
     ->size(40)
 ```
 
+### Curations
+
+```php
+use Awcodes\Curator\CurationPreset;
+
+Curator::curationPresets([
+    CurationPreset::make('thumbnail')->width(200)->height(200)->name('Thumbnail'),
+    CurationPreset::make('avatar')->width(420)->height(420)->name('Avatar'),
+    CurationPreset::make('hero')->width(1024)->height(320)->name('Hero'),
+]);
+```
+
 ### Glider Blade Component
 
 To make it as easy as possible to output your media, Curator comes with an 
@@ -270,6 +282,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 - [Adam Weston](https://github.com/awcodes)
 - [The PHP League](https://glide.thephpleague.com/) for the awesome Glide package.
+- [Cropperjs](https://github.com/fengyuanchen/cropperjs) for their amazing Javascript package.
 - [All Contributors](../../contributors)
 
 ## License

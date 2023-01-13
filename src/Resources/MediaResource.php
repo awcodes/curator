@@ -2,6 +2,7 @@
 
 namespace Awcodes\Curator\Resources;
 
+use Awcodes\Curator\Components\Forms\CuratorEditor;
 use Awcodes\Curator\Components\Forms\Uploader;
 use Awcodes\Curator\Components\Tables\CuratorColumn;
 use Awcodes\Curator\Models\Media;
@@ -52,10 +53,24 @@ class MediaResource extends Resource
                                                 $component->state($record);
                                             }),
                                     ]),
+                                Forms\Components\Tabs\Tab::make(__('curator::forms.sections.curation'))
+                                    ->visible(fn($record) => Str::of($record->type)->contains('image'))
+                                    ->schema([
+                                        Forms\Components\Repeater::make('curations')
+                                            ->itemLabel(fn ($state): ?string => $state['curation']['key'] ?? null)
+                                            ->collapsible()
+                                            ->schema([
+                                                CuratorEditor::make('curation')
+                                                    ->disableLabel()
+                                                    ->buttonLabel(__('curator::forms.curations.button_label'))
+                                                    ->lazy(),
+                                            ])
+                                    ]),
                                 Forms\Components\Tabs\Tab::make(__('curator::forms.sections.upload_new'))
                                     ->schema([
                                         static::getUploaderField()
-                                    ])
+                                            ->helperText('If you have any curations for this media you will possibly need to recreate them, it will not happen automatically.')
+                                    ]),
                             ]),
                         Forms\Components\Section::make(__('curator::forms.sections.details'))
                             ->schema([
@@ -172,6 +187,7 @@ class MediaResource extends Resource
             Forms\Components\TextInput::make('name')
                 ->label(__('curator::forms.fields.name'))
                 ->hiddenOn('create')
+                ->required()
                 ->dehydrateStateUsing(function ($component, $state) {
                     $slugged = Str::slug($state);
                     $component->state($slugged);
@@ -196,7 +212,6 @@ class MediaResource extends Resource
     {
         return Uploader::make('file')
             ->disableLabel()
-            ->required()
             ->preserveFilenames(app('curator')->shouldPreserveFilenames())
             ->maxWidth(app('curator')->getMaxWidth())
             ->minSize(app('curator')->getMinSize())

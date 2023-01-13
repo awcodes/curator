@@ -13,7 +13,15 @@ return [
         'ext' => 'Ext',
         'section_label' => 'Details',
     ],
-    'modal' => [
+    'picker' => [
+        'button' => 'Add media',
+        'view' => 'View',
+        'edit' => 'Edit',
+        'download' => 'Download',
+        'remove' => 'Remove',
+    ],
+    'panel' => [
+        'button' => 'Add media',
         'heading' => 'Media Picker',
         'search_label' => 'Search',
         'search_placeholder' => 'Search',
@@ -33,10 +41,7 @@ return [
         'download' => 'Download',
         'remove' => 'Remove',
     ],
-    'picker' => [
-        'button' => 'Add media',
-    ],
-    'preview' => [
-
+    'curation' => [
+        'heading' => 'Curating'
     ],
 ];

@@ -3,8 +3,11 @@
 namespace Awcodes\Curator\Models;
 
 use Awcodes\Curator\Concerns\HasPackageFactory;
+use Awcodes\Curator\Facades\Curator;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
@@ -17,11 +20,13 @@ class Media extends Model
         'width' => 'integer',
         'height' => 'integer',
         'size' => 'integer',
+        'curations' => 'array',
     ];
 
     protected $appends = [
         'url',
         'thumbnail_url',
+        'resizable',
     ];
 
     protected function url(): Attribute
@@ -45,6 +50,13 @@ class Media extends Model
         );
     }
 
+    protected function resizable(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Curator::isResizable($this->ext),
+        );
+    }
+
     protected function sizeForHumans(): Attribute
     {
         return Attribute::make(
@@ -61,5 +73,12 @@ class Media extends Model
         }
 
         return round($size, $precision).' '.$units[$i];
+    }
+
+    public function getCuration(string $key): array
+    {
+        return Arr::first(collect($this->curations)->filter(function($item) use ($key) {
+            return $item['curation']['key'] === $key;
+        }))['curation'] ?? [];
     }
 }

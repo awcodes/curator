@@ -44,7 +44,7 @@
                     />
                 @else
                     <x-curator::document-image
-                        label="{{ $currentItem['filename'] }}"
+                        label="{{ $currentItem['name'] }}"
                         icon-size="xl"
                     />
                 @endif
@@ -55,19 +55,19 @@
                         target="_blank"
                         rel="noopener nofollow"
                         class="flex items-center justify-center flex-none w-10 h-10 transition text-gray-600 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.view') }}"
+                        x-tooltip.raw="{{ __('curator::views.picker.view') }}"
                     >
                         @svg('heroicon-s-eye', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.view') }}</span>
+                        <span class="sr-only">{{ __('curator::views.picker.view') }}</span>
                     </a>
                     <button
                         type="button"
                         wire:click="mountFormComponentAction('{{ $statePath }}', 'curator_download')"
                         class="flex items-center justify-center flex-none w-10 h-10 transition text-primary-600 hover:text-primary-500 dark:text-primary-500 dark:hover:text-primary-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.download') }}"
+                        x-tooltip.raw="{{ __('curator::views.picker.download') }}"
                     >
                         @svg('heroicon-s-download', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.download') }}</span>
+                        <span class="sr-only">{{ __('curator::views.picker.download') }}</span>
                     </button>
                     @if (! $isDisabled())
                     <a
@@ -75,19 +75,19 @@
                         target="_blank"
                         rel="noopener nofollow"
                         class="flex items-center justify-center flex-none w-10 h-10 transition text-success-600 hover:text-success-500 dark:text-success-500 dark:hover:text-success-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.edit') }}"
+                        x-tooltip.raw="{{ __('curator::views.picker.edit') }}"
                     >
                         @svg('heroicon-s-pencil', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.edit') }}</span>
+                        <span class="sr-only">{{ __('curator::views.picker.edit') }}</span>
                     </a>
                     <button
                         type="button"
                         x-on:click="state = null"
                         class="flex items-center justify-center flex-none w-10 h-10 transition text-danger-600 hover:text-danger-500 dark:text-danger-500 dark:hover:text-danger-400"
-                        x-tooltip.raw="{{ __('curator::views.modal.remove') }}"
+                        x-tooltip.raw="{{ __('curator::views.picker.remove') }}"
                     >
                         @svg('heroicon-s-minus-circle', 'w-4 h-4')
-                        <span class="sr-only">{{ __('curator::views.modal.remove') }}</span>
+                        <span class="sr-only">{{ __('curator::views.picker.remove') }}</span>
                     </button>
                     @endif
                 </div>

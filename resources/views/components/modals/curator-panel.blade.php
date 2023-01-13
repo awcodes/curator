@@ -135,7 +135,7 @@
                                 @svg('heroicon-s-check', 'w-5 h-5')
                             </span>
                             <span class="sr-only">
-                                {{ __('curator::views.modal.deselect') }}
+                                {{ __('curator::views.panel.deselect') }}
                             </span>
                         </button>
                     </li>
@@ -153,7 +153,7 @@
                         x-on:click.prevent="loadMoreFiles()"
                         class="flex items-center w-full h-full justify-center !bg-gray-700 focus:outline focus:outline-offset-1 focus:outline-2 focus:outline-primary-500 focus:shadow-lg"
                     >
-                        {{ __('curator::views.modal.load_more') }}
+                        {{ __('curator::views.panel.load_more') }}
                     </button>
                 </li>
 
@@ -162,7 +162,7 @@
                     x-cloak
                     class="col-span-3 sm:col-span-4 md:col-span-6 lg:col-span-8"
                 >
-                    {{ __('curator::views.modal.empty') }}
+                    {{ __('curator::views.panel.empty') }}
                 </li>
             </ul>
         </div> <!-- gallery -->
@@ -170,12 +170,12 @@
         <div class="w-full lg:h-full lg:max-w-xs overflow-auto bg-gray-100 dark:bg-gray-900/30 flex flex-col shadow-top lg:shadow-none" style="z-index: 1;">
 
             <label class="border-b border-gray-300 dark:border-gray-800 relative">
-                <span class="sr-only">{{ __('curator::views.modal.search_label') }}</span>
+                <span class="sr-only">{{ __('curator::views.panel.search_label') }}</span>
                 @svg('heroicon-o-search', 'w-4 h-4 absolute top-3 left-3 rtl:left-0 rtl:right-3 dark:text-gray-500')
                 <input
                     type="search"
                     wire:ignore
-                    placeholder="{{ __('curator::views.modal.search_placeholder') }}"
+                    placeholder="{{ __('curator::views.panel.search_placeholder') }}"
                     x-on:input.debounce.500ms="searchFiles"
                     class="block w-full transition pl-10 rtl:pl-3 rtl:pr-10 duration-75 border-none focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-black/10 dark:text-white"
                 />
@@ -184,7 +184,7 @@
             <div x-show="! selected" class="flex-1 overflow-hidden">
                 <div class="flex flex-col h-full overflow-y-auto">
                     <h4 class="font-bold py-2 px-4 mb-0">
-                        {{ __('curator::views.modal.add_files') }}
+                        {{ __('curator::views.panel.add_files') }}
                     </h4>
 
                     <div class="flex-1 overflow-auto px-4 pb-4">
@@ -198,7 +198,7 @@
                             wire:target="addFiles"
                             wire:click.prevent="addFiles"
                         >
-                            {{ __('curator::views.modal.add_files') }}
+                            {{ __('curator::views.panel.add_files') }}
                         </x-filament::button>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
                <div class="flex flex-col h-full overflow-y-auto">
 
                     <h4 class="font-bold py-2 px-4 mb-0">
-                        {{ __('curator::views.modal.edit_media') }}
+                        {{ __('curator::views.panel.edit_media') }}
                     </h4>
 
                     <div class="flex-1 overflow-auto px-4 pb-4">
@@ -235,29 +235,29 @@
                                     target="_blank"
                                     rel="noopener nofollow"
                                     class="flex items-center justify-center flex-none w-10 h-10 transition text-gray-600 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
-                                    x-tooltip.raw="{{ __('curator::views.modal.view') }}"
+                                    x-tooltip.raw="{{ __('curator::views.panel.view') }}"
                                 >
                                     @svg('heroicon-s-eye', 'w-4 h-4')
-                                    <span class="sr-only">{{ __('curator::views.modal.view') }}</span>
+                                    <span class="sr-only">{{ __('curator::views.panel.view') }}</span>
                                 </a>
                                 <button
                                     type="button"
                                     wire:click="download"
                                     class="flex items-center justify-center flex-none w-10 h-10 transition text-primary-600 hover:text-primary-500 dark:text-primary-500 dark:hover:text-primary-400"
-                                    x-tooltip.raw="{{ __('curator::views.modal.download') }}"
+                                    x-tooltip.raw="{{ __('curator::views.panel.download') }}"
                                 >
                                     @svg('heroicon-s-download', 'w-4 h-4')
-                                    <span class="sr-only">{{ __('curator::views.modal.download') }}</span>
+                                    <span class="sr-only">{{ __('curator::views.panel.download') }}</span>
                                 </button>
                                 <button
                                     type="button"
                                     wire:target="destroyFile"
                                     wire:click.prevent="destroyFile"
-                                    x-tooltip.raw="{{ __('curator::views.modal.edit_delete') }}"
+                                    x-tooltip.raw="{{ __('curator::views.panel.edit_delete') }}"
                                     class="flex items-center justify-center flex-none w-10 h-10 transition text-danger-600 hover:text-danger-500 dark:text-danger-500 dark:hover:text-danger-400"
                                 >
                                     @svg('heroicon-s-trash', 'w-4 h-4')
-                                    <span class="sr-only">{{ __('curator::views.modal.edit_delete') }}</span>
+                                    <span class="sr-only">{{ __('curator::views.panel.edit_delete') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -273,7 +273,7 @@
                             wire:target="updateFile"
                             wire:click.prevent="updateFile"
                         >
-                            {{ __('curator::views.modal.edit_save') }}
+                            {{ __('curator::views.panel.edit_save') }}
                         </x-filament::button>
 
                         <x-filament::button
@@ -282,7 +282,7 @@
                             size="sm"
                             x-on:click.prevent="selected = null"
                         >
-                            {{ __('curator::views.modal.edit_cancel') }}
+                            {{ __('curator::views.panel.edit_cancel') }}
                         </x-filament::button>
 
                             <x-filament::button
@@ -292,7 +292,7 @@
                                 wire:click.prevent="insertMedia"
                                 class="ml-auto"
                             >
-                                {{ __('curator::views.modal.use_selected_image') }}
+                                {{ __('curator::views.panel.use_selected_image') }}
                             </x-filament::button>
                     </div>
                </div>

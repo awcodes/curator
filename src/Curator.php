@@ -43,6 +43,8 @@ class Curator
 
     protected string|Closure|null $imageResizeTargetWidth = null;
 
+    protected array|null $curationPresets = [];
+
     public function resourceLabel(string|Closure $label): static
     {
         $this->resourceLabel = $label;
@@ -67,6 +69,13 @@ class Curator
     public function tableHasGridLayout(bool|Closure|null $condition = true): static
     {
         $this->tableHasGridLayout = $condition;
+
+        return $this;
+    }
+
+    public function curationPresets(array|null $presets): static
+    {
+        $this->curationPresets = $presets;
 
         return $this;
     }
@@ -172,14 +181,21 @@ class Curator
         return $this->navigationIcon;
     }
 
+    public function getCurationPresets(): array|null
+    {
+        return collect($this->curationPresets)->map(function($preset) {
+            return $preset->getPreset();
+        })->toArray();
+    }
+
     public function shouldTableHaveIconActions(): string
     {
-        return $this->tableHasIconActions;
+        return $this->evaluate($this->tableHasIconActions);
     }
 
     public function shouldTableHaveGridLayout(): string
     {
-        return $this->tableHasGridLayout;
+        return $this->evaluate($this->tableHasGridLayout);
     }
 
     public function shouldPreserveFilenames(): bool
@@ -245,11 +261,6 @@ class Curator
     public function getImageResizeTargetWidth(): ?string
     {
         return $this->evaluate($this->imageResizeTargetWidth);
-    }
-
-    private function getPathInfo(string $filename): array
-    {
-        return pathinfo($filename);
     }
 
     public function isResizable(string $ext): bool
