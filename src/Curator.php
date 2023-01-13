@@ -4,6 +4,7 @@ namespace Awcodes\Curator;
 
 use Closure;
 use Filament\Support\Concerns\EvaluatesClosures;
+use Illuminate\Support\Facades\Session;
 
 class Curator
 {
@@ -195,6 +196,9 @@ class Curator
 
     public function shouldTableHaveGridLayout(): string
     {
+        if (Session::has('tableLayout')) {
+            return Session::get('tableLayout');
+        }
         return $this->evaluate($this->tableHasGridLayout);
     }
 

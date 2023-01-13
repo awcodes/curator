@@ -63,6 +63,7 @@ class MediaResource extends Resource
                                                 CuratorEditor::make('curation')
                                                     ->disableLabel()
                                                     ->buttonLabel(__('curator::forms.curations.button_label'))
+                                                    ->required()
                                                     ->lazy(),
                                             ])
                                     ]),
