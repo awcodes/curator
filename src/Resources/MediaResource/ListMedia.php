@@ -20,28 +20,13 @@ class ListMedia extends ListRecords
                 Action::make('toggle-table-view')
                     ->color('secondary')
                     ->label(function (): string {
-                        $condition = app('curator')->shouldTableHaveGridLayout();
-                        if (Session::has('tableLayout')) {
-                            $condition = Session::get('tableLayout');
-                        }
-
-                        return $condition ? __('curator::tables.actions.toggle_table_list') : __('curator::tables.actions.toggle_table_grid');
+                        return Session::get('tableLayout') ? __('curator::tables.actions.toggle_table_list') : __('curator::tables.actions.toggle_table_grid');
                     })
                     ->icon(function (): string {
-                        $condition = app('curator')->shouldTableHaveGridLayout();
-                        if (Session::has('tableLayout')) {
-                            $condition = Session::get('tableLayout');
-                        }
-
-                        return $condition ? 'heroicon-s-view-list' : 'heroicon-s-view-grid';
+                        return Session::get('tableLayout') ? 'heroicon-s-view-list' : 'heroicon-s-view-grid';
                     })
                     ->action(function(): void {
-                        if (! Session::has('tableLayout')) {
-                            Session::put('tableLayout', ! app('curator')->shouldTableHaveGridLayout());
-                        } else {
-                            $condition = Session::get('tableLayout');
-                            Session::put('tableLayout', ! $condition);
-                        }
+                        Session::put('tableLayout', ! Session::get('tableLayout'));
                     }),
             ],
             parent::getActions(),
@@ -64,9 +49,15 @@ class ListMedia extends ListRecords
             return [
                 'md' => 2,
                 'lg' => 3,
+                'xl' => 4,
             ];
         }
 
         return null;
+    }
+
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [6, 12, 24, 48, -1];
     }
 }

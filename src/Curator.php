@@ -196,10 +196,11 @@ class Curator
 
     public function shouldTableHaveGridLayout(): string
     {
-        if (Session::has('tableLayout')) {
-            return Session::get('tableLayout');
+        if (! Session::has('tableLayout')) {
+            Session::put('tableLayout', $this->evaluate($this->tableHasGridLayout));
         }
-        return $this->evaluate($this->tableHasGridLayout);
+
+        return Session::get('tableLayout');
     }
 
     public function shouldPreserveFilenames(): bool
