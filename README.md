@@ -21,7 +21,7 @@ composer require awcodes/curator
 php artisan curator:install
 ```
 
-## Upgrade
+## Upgrading
 
 If you are upgrading from 1.x to 2.x you will also need to run:
 
@@ -31,7 +31,9 @@ php artisan curator:upgrade
 
 This will update Curator's database schema and create a backup of your media table that can be deleted after upgrade should you choose to do so.
 
-***You will also need to change any references in your codebase from `$media->filename` to `$media->path`.***
+### Additional Steps
+1. Change any references in your codebase from `$media->filename` to `$media->path`.
+2. Change any use statements from `Awcodes\FilamentCurator` to `Awcodes\Curator`.
 
 ## Usage
 
@@ -50,6 +52,7 @@ public function register()
         ->navigationIcon(string)
         ->tableHasIconActions(bool|Closure|null)
         ->tableHasGridLayout(bool|Closure|null)
+        ->curationPresets(array|null)
         ->preserveFilenames(bool|Closure)
         ->acceptedFileTypes(array|Closure)
         ->maxWidth(int|Closure)
@@ -168,13 +171,15 @@ CuratorColumn::make('featured_image')
 
 ### Curations
 
+Curations are a way to create custom sizes and focal points for your images. After creating curation, they can be referenced by their key to output them in your blade files.
+
 ```php
 use Awcodes\Curator\CurationPreset;
 
 Curator::curationPresets([
-    CurationPreset::make('thumbnail')->width(200)->height(200)->name('Thumbnail'),
-    CurationPreset::make('avatar')->width(420)->height(420)->name('Avatar'),
-    CurationPreset::make('hero')->width(1024)->height(320)->name('Hero'),
+    CurationPreset::make(key: 'thumbnail')->width(200)->height(200)->name('Thumbnail'),
+    CurationPreset::make(key: 'avatar')->width(420)->height(420)->name('Avatar'),
+    CurationPreset::make(key: 'hero')->width(1024)->height(320)->name('Hero'),
 ]);
 ```
 
@@ -183,14 +188,14 @@ Curator::curationPresets([
 To make it as easy as possible to output your media, Curator comes with an 
 `<x-curator-glider>` blade component.
 
-See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-reference/) for more information about Glide's options
+See [Glide's quick reference](https://glide.thephpleague.com/2.0/api/quick-reference/) for more information about Glide's options.
 
 **Special attributes**
 
 - media: id (int) or model (Media) instance ***required***
 - loading: defaults to 'lazy'
 - glide: this can be used to pass in a glide query string if you do not want to use individual attributes
-- srcset: this will output the necessary srcset with glide generated images. 
+- srcset: this will output the necessary srcset with glide generated urls. 
   Must be an array of srcset widths and requires the 'sizes' attribute to 
   also be set.
 
